@@ -1,0 +1,310 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dhritiraj Lahakar | AIML Portfolio</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+</head>
+<body>
+
+  <!-- SIDE NAV -->
+  <nav class="sidenav">
+    <div class="nav-logo">
+      <div class="nav-logo-box">DL</div>
+      <div class="nav-logo-text">
+        <strong>Dhritiraj Lahakar</strong>
+        <span>AIML · CSE</span>
+      </div>
+    </div>
+    <div class="nav-divider"></div>
+    <ul class="nav-links">
+      <li><a href="#hero"><div class="nav-icon-box"><i class="fas fa-house"></i></div><span class="nav-label">Home</span></a></li>
+      <li><a href="#about"><div class="nav-icon-box"><i class="fas fa-user"></i></div><span class="nav-label">About</span></a></li>
+      <li><a href="#works"><div class="nav-icon-box"><i class="fas fa-layer-group"></i></div><span class="nav-label">Works</span></a></li>
+      <li><a href="#skills"><div class="nav-icon-box"><i class="fas fa-brain"></i></div><span class="nav-label">Skills</span></a></li>
+      <li><a href="#contact"><div class="nav-icon-box"><i class="fas fa-envelope"></i></div><span class="nav-label">Contact</span></a></li>
+    </ul>
+    <div class="nav-socials">
+      <a href="https://github.com/dhritiraj-08" target="_blank"><div class="nav-icon-box"><i class="fab fa-github"></i></div><span>GitHub</span></a>
+      <a href="https://www.linkedin.com/in/dhritiraj-lahakar-31939528a/" target="_blank"><div class="nav-icon-box"><i class="fab fa-linkedin"></i></div><span>LinkedIn</span></a>
+      <a href="https://leetcode.com/u/dhritiraj-08/" target="_blank"><div class="nav-icon-box"><i class="fas fa-code"></i></div><span>LeetCode</span></a>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <p class="hero-greeting">Hello, World</p>
+      <h1 class="hero-name">I'm <span class="highlight">Dhritiraj Lahakar</span></h1>
+      <h2 class="hero-tagline">
+        <span class="typed-text"></span><span class="cursor">|</span>
+      </h2>
+    </div>
+    <div class="dino-strip">
+      <canvas id="dinoCanvas"></canvas>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section class="about" id="about">
+    <div class="section-label">— About Me</div>
+    <div class="about-container">
+      <div class="about-image">
+        <div class="img-wrapper">
+          <img src="{% static 'img/profile.jpg' %}" alt="Dhritiraj Lahakar" />
+        </div>
+        <!-- About Lottie removed -->
+      </div>
+      <div class="about-text">
+        <h2>Who am I?</h2>
+        <p>Hi, I'm <strong>Dhritiraj</strong> — a Computer Science Engineering student specializing in AI &amp; Machine Learning, passionate about building innovative and user-focused digital experiences. I enjoy exploring emerging technologies, AI tools, and modern solutions that create real-world impact.</p>
+        <p>I have worked with the startup <strong>TapNex</strong> as an Operations Head, where I also contributed to frontend development and product execution. Alongside this, I've served as an Operations Lead in my college club, helping manage events, teamwork, and organizational activities.</p>
+        <p>Beyond development, I have a strong interest in <strong>UI/UX design</strong> and love creating clean, engaging, and intuitive user experiences. I'm always curious to learn, experiment, and innovate with next-generation technologies, especially in the fields of AI, automation, and digital products.</p>
+        <p>I believe in combining creativity with technology to turn ideas into impactful solutions.</p>
+        <div class="about-stats">
+          <div class="stat"><span class="stat-num">B.Tech</span><span class="stat-label">Education CSE</span></div>
+          <div class="stat"><span class="stat-num">2+</span><span class="stat-label">Years Coding &amp; Dev</span></div>
+          <div class="stat"><span class="stat-num">5+</span><span class="stat-label">Projects</span></div>
+          <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Curiosity</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKS / SKILLS / RESUME SECTION -->
+  <section class="works" id="works">
+    <div class="section-label">— What I Do</div>
+    <h2 class="section-title">My <span class="highlight">Space</span></h2>
+
+    <div class="cards-grid top-cards">
+      <div class="card card-projects">
+        <div class="card-icon"><i class="fas fa-code"></i></div>
+        <h3>Projects</h3>
+        <p>A collection of real-world web, AI, and software projects I've built.</p>
+        <div class="project-list">
+
+          <div class="project-item">
+            <span class="project-dot"></span>
+            <div>
+              <strong>Forge — Gaming Cafe Platform</strong>
+              <p>A full-stack gaming cafe management system for TapNex featuring seat registration, ticket booking, session management, and real-time availability tracking.</p>
+              <a href="https://forge.tapnex.tech/" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> forge.tapnex.tech</a>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <span class="project-dot"></span>
+            <div>
+              <strong>TapNex — NFC Event Ticketing</strong>
+              <p>An end-to-end event ticketing platform with NFC-based payments, event management, attendee tracking, and seamless check-in experience built for TapNex.</p>
+              <a href="https://tickets.tapnex.tech/" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> tickets.tapnex.tech</a>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <span class="project-dot"></span>
+            <div>
+              <strong>The Cognito — Club Management Portal</strong>
+              <p>A comprehensive college club management website handling event registrations, leaderboards, member management, event details, and club activity tracking.</p>
+              <a href="https://thecognito.club/" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> thecognito.club</a>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <span class="project-dot"></span>
+            <div>
+              <strong>PolyglotTalk — Offline Speech Translation</strong>
+              <p>A real-time offline speech-to-speech translation system that works without internet connectivity. Supports multilingual conversations using on-device AI models for instant, private, and accurate translations.</p>
+              <span class="project-tag">AI · NLP · Offline</span>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <span class="project-dot"></span>
+            <div>
+              <strong>Cinematographer Portfolio</strong>
+              <p>A visually rich, cinematic portfolio website built for a professional cinematographer client — showcasing reels, projects, and visual storytelling with a premium UI/UX design.</p>
+              <a href="https://tushar-portfolio-p30g.onrender.com" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> tushar-portfolio-p30g.onrender.com</a>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <span class="project-dot"></span>
+            <div>
+              <strong>Personal Portfolio — Dhritiraj Lahakar</strong>
+              <p>This very website — a dark-themed developer portfolio built with Django, featuring a dino animation, skills showcase, project cards, and a contact form.</p>
+              <span class="project-tag">Django · HTML · CSS · JS</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card card-resume">
+        <div class="card-icon"><i class="fas fa-file-alt"></i></div>
+        <h3>Resume</h3>
+        <p>Download my latest resume to know more about my experience and education.</p>
+        <div class="resume-highlights">
+          <div class="resume-item"><i class="fas fa-graduation-cap"></i> B.Tech CSE (AIML) — 2022–2026</div>
+          <div class="resume-item"><i class="fas fa-briefcase"></i> [ Internship / Experience placeholder ]</div>
+          <div class="resume-item"><i class="fas fa-certificate"></i> [ Certifications placeholder ]</div>
+        </div>
+        <a href="{% static 'resume.pdf' %}" class="btn btn-primary" download>
+          <i class="fas fa-download"></i> Download Resume
+        </a>
+      </div>
+    </div>
+
+    <!-- SKILLS FULL WIDTH -->
+    <div class="card card-skills skills-full" id="skills">
+      <h3 class="skills-title">Skills</h3>
+      <div class="skills-underline"></div>
+      <div class="skill-categories">
+
+        <!-- AI & ML -->
+        <div class="skill-cat-card">
+          <div class="skill-cat-header"><i class="fas fa-brain"></i><span>AI &amp; Machine Learning</span></div>
+          <div class="skill-box-grid">
+            <div class="skill-box">Machine Learning</div>
+            <div class="skill-box">Deep Learning</div>
+            <div class="skill-box">Computer Vision</div>
+            <div class="skill-box">NLP</div>
+            <div class="skill-box">Data Analysis</div>
+            <div class="skill-box">Neural Networks</div>
+          </div>
+        </div>
+
+        <!-- Development -->
+        <div class="skill-cat-card">
+          <div class="skill-cat-header"><i class="fas fa-code"></i><span>Development</span></div>
+          <div class="skill-box-grid">
+            <div class="skill-box">Python</div>
+            <div class="skill-box">JavaScript</div>
+            <div class="skill-box">HTML5</div>
+            <div class="skill-box">CSS3</div>
+            <div class="skill-box">Git</div>
+            <div class="skill-box">Django</div>
+          </div>
+        </div>
+
+        <!-- Data & Tools -->
+        <div class="skill-cat-card">
+          <div class="skill-cat-header"><i class="fas fa-database"></i><span>Data &amp; Tools</span></div>
+          <div class="skill-box-grid">
+            <div class="skill-box">SQL</div>
+            <div class="skill-box">NumPy</div>
+            <div class="skill-box">Pandas</div>
+            <div class="skill-box">Scikit-learn</div>
+            <div class="skill-box">TensorFlow</div>
+            <div class="skill-box">PyTorch</div>
+          </div>
+        </div>
+
+        <!-- DSA -->
+        <div class="skill-cat-card">
+          <div class="skill-cat-header"><i class="fas fa-sitemap"></i><span>Data Structures</span></div>
+          <div class="skill-box-grid">
+            <div class="skill-box">Linked List</div>
+            <div class="skill-box">Stack &amp; Queue</div>
+            <div class="skill-box">Trees</div>
+            <div class="skill-box">Graphs</div>
+          </div>
+        </div>
+
+        <!-- Core Coding -->
+        <div class="skill-cat-card">
+          <div class="skill-cat-header"><i class="fas fa-terminal"></i><span>Core Coding Skills</span></div>
+          <div class="skill-box-grid">
+            <div class="skill-box">DSA</div>
+            <div class="skill-box">Arrays &amp; Strings</div>
+            <div class="skill-box">HashMap / HashSet</div>
+            <div class="skill-box">Sliding Window</div>
+            <div class="skill-box">Two Pointers</div>
+            <div class="skill-box">Recursion</div>
+            <div class="skill-box">Backtracking</div>
+            <div class="skill-box">Dynamic Programming</div>
+          </div>
+        </div>
+
+        <!-- CS Subjects -->
+        <div class="skill-cat-card">
+          <div class="skill-cat-header"><i class="fas fa-book"></i><span>CS Subjects</span></div>
+          <div class="skill-box-grid">
+            <div class="skill-box">DBMS (SQL)</div>
+            <div class="skill-box">Operating Systems</div>
+            <div class="skill-box">Computer Networks</div>
+            <div class="skill-box">System Design</div>
+          </div>
+        </div>
+
+        <!-- Professional -->
+        <div class="skill-cat-card" style="grid-column: 1 / -1; max-width: 400px; margin: 0 auto; width: 100%;">
+          <div class="skill-cat-header"><i class="fas fa-users"></i><span>Professional Skills</span></div>
+          <div class="skill-box-grid">
+            <div class="skill-box">Problem Solving</div>
+            <div class="skill-box">Team Work</div>
+            <div class="skill-box">Communication</div>
+            <div class="skill-box">Research</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section class="contact" id="contact">
+    <div class="section-label">— Let's Connect</div>
+    <h2 class="section-title">Get In <span class="highlight">Touch</span></h2>
+    <p class="contact-sub">Have a project idea, collaboration, or just want to say hi? My inbox is open.</p>
+    <div class="contact-container">
+      <div class="contact-left">
+        <div class="contact-links">
+          <a href="mailto:dhritirajlahkarwork@gmail.com" class="contact-card">
+            <i class="fas fa-envelope"></i><span>dhritirajlahkarwork@gmail.com</span>
+          </a>
+          <a href="https://github.com/dhritiraj-08" target="_blank" class="contact-card">
+            <i class="fab fa-github"></i><span>github.com/dhritiraj-08</span>
+          </a>
+          <a href="https://www.linkedin.com/in/dhritiraj-lahakar-31939528a/" target="_blank" class="contact-card">
+            <i class="fab fa-linkedin"></i><span>Dhritiraj Lahakar</span>
+          </a>
+          <a href="https://leetcode.com/u/dhritiraj-08/" target="_blank" class="contact-card">
+            <i class="fas fa-code"></i><span>leetcode.com/u/dhritiraj-08</span>
+          </a>
+        </div>
+        <!-- Contact Lottie -->
+        <div id="lottie-contact" class="lottie-contact"></div>
+      </div>
+      <form class="contact-form" method="POST" action="{% url 'contact' %}">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+        <button type="submit" class="btn btn-primary">Send Message <i class="fas fa-paper-plane"></i></button>
+      </form>
+    </div>
+    {% if messages %}
+      {% for message in messages %}
+        <p class="form-success">{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+  </section>
+
+  <script src="{% static 'js/script.js' %}"></script>
+  <script src="{% static 'js/dino.js' %}"></script>
+  <script>
+    // Contact — message animation
+    lottie.loadAnimation({
+      container: document.getElementById('lottie-contact'),
+      renderer: 'svg', loop: true, autoplay: true,
+      path: 'https://assets6.lottiefiles.com/packages/lf20_u25cckyh.json'
+    });
+  </script>
+</body>
+</html>
