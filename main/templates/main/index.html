@@ -126,15 +126,15 @@ td { font-size: 15px; color: var(--text); padding-right: 12px; }
 
 /* RESUME */
 #resume { border-top: 1px solid rgba(255,255,255,0.06); padding-bottom: clamp(60px, 8vw, 110px); }
-.resume { display: grid; grid-template-columns: 6fr 4fr; column-gap: 8vw; align-items: start; }
-.resume .sub { margin-top: 12px; font-size: 15px; color: var(--muted); }
-.rlinks { margin-top: 40px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; font-family: var(--mono); font-size: 13px; }
+.rhead { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
+.rhead .sub { margin-top: 12px; font-size: 15px; color: var(--muted); }
+.rlinks { display: flex; align-items: baseline; gap: 28px; font-family: var(--mono); font-size: 13px; }
 .rlinks .dl { color: var(--accent); letter-spacing: 0; transition: letter-spacing 200ms ease; }
 .rlinks .dl:hover { letter-spacing: 0.06em; }
 .rlinks .vw { color: var(--muted); transition: color 150ms; }
 .rlinks .vw:hover { color: var(--text); }
-.resume-r iframe { display: block; width: 420px; max-width: 100%; height: 560px; border: 1px solid rgba(232,255,71,0.2); border-radius: 0; background: var(--surface); transition: border-color 200ms ease; }
-.resume-r iframe:hover { border-color: rgba(232,255,71,0.45); }
+#resume iframe { display: block; width: 100%; height: 80vh; min-height: 600px; max-height: 900px; margin-top: 40px; border: 1px solid rgba(232,255,71,0.2); border-radius: 0; background: #111; transition: border-color 200ms ease; }
+#resume iframe:hover { border-color: rgba(232,255,71,0.45); }
 .doc-cap { margin-top: 10px; font-family: var(--mono); font-size: 10px; color: var(--muted); }
 
 /* PROJECTS */
@@ -154,14 +154,6 @@ td { font-size: 15px; color: var(--text); padding-right: 12px; }
 .row .tech { font-family: var(--mono); font-size: 11px; line-height: 1.7; color: var(--muted); text-align: right; padding-top: 6px; }
 .row .go { font-family: var(--mono); font-size: 12px; color: var(--accent); text-align: right; padding-top: 6px; opacity: 0; transition: opacity 200ms ease; white-space: nowrap; }
 .row:hover .go, .row .go:focus-visible { opacity: 1; }
-.more { margin-top: clamp(56px, 7vw, 96px); font-weight: 700; font-size: 18px; }
-.more + .list { margin-top: 20px; }
-.list.small .row { grid-template-columns: 56px minmax(0, 1fr) 84px; padding: 16px 16px 16px 0; }
-.list.small .n { padding-top: 3px; }
-.list.small .name { font-size: 15px; }
-.list.small .desc { font-family: var(--body); font-size: 13px; margin-top: 2px; }
-.list.small .go { padding-top: 2px; font-size: 11px; color: var(--muted); opacity: 1; transition: color 150ms; }
-.list.small .go:hover { color: var(--accent); }
 /* featured rows: expand on hover */
 #featured .row { border-left: 2px solid transparent; transition: background 200ms ease, border-color 200ms ease, padding-left 200ms ease; }
 #featured .row:hover, #featured .row:focus-within { border-left-color: #E8FF47; padding-left: 18px; background: rgba(232,255,71,0.02); }
@@ -171,8 +163,12 @@ td { font-size: 15px; color: var(--text); padding-right: 12px; }
 #featured .row:hover .xp, #featured .row:focus-within .xp { max-height: 280px; opacity: 1; transform: none; }
 .xp p { margin-top: 14px; font-size: 14px; line-height: 1.7; color: #C9C9D0; }
 .xp .live { display: inline-block; margin-top: 10px; font-family: var(--mono); font-size: 12px; color: var(--accent); }
-.status { padding: 20px 0; font-family: var(--mono); font-size: 12px; color: var(--muted); }
-.status a { color: var(--accent); }
+
+.ghmore { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 28px 0; margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
+.ghmore h3 { font-weight: 700; font-size: 20px; color: var(--text); }
+.ghmore p { margin-top: 6px; font-size: 13px; color: var(--muted); }
+.ghmore a { flex: none; padding: 10px 20px; border: 1px solid rgba(232,255,71,0.3); color: var(--accent); font-family: var(--mono); font-size: 12px; background: transparent; transition: background 200ms, border-color 200ms; }
+.ghmore a:hover { background: rgba(232,255,71,0.06); border-color: #E8FF47; }
 
 /* CONTACT */
 #contact { position: relative; border-top: 1px solid rgba(255,255,255,0.06); }
@@ -225,12 +221,11 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
   .row { grid-template-columns: 36px 1fr; padding: 24px 0; row-gap: 10px; }
   .row .tech { grid-column: 2; text-align: left; padding-top: 0; }
   .row .go { grid-column: 2; text-align: left; opacity: 1; padding-top: 0; }
-  .list.small .row { grid-template-columns: 36px 1fr; }
-  .list.small .go { grid-column: 2; }
-  #orbit { display: none; }
-  .resume { display: block; }
-  .resume-r { margin-top: 48px; }
-  .resume-r iframe { width: 100%; height: 420px; }
+      #orbit { display: none; }
+  .rhead { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .rlinks { flex-direction: column; align-items: flex-start; gap: 12px; }
+  #resume iframe { height: 70vh; min-height: 500px; }
+  .ghmore { flex-direction: column; align-items: flex-start; }
   .ccols { display: block; }
   .cform { margin-top: 48px; }
   footer { flex-direction: column; }
@@ -326,23 +321,21 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
 </section>
 
 <section id="resume" class="reveal">
-  <div class="resume">
-    <div class="resume-l">
+  <div class="rhead">
+    <div>
       <h2 class="big">Résumé.</h2>
       <p class="sub">One page. Everything that matters.</p>
-      <!-- Place resume PDF at:
-           C:\Dhritiraj Portfolio Website\staticfiles\resume.pdf
-           and main\static\resume.pdf -->
-      <div class="rlinks">
-        <a class="dl" href="/static/resume.pdf" download>Download PDF ↓</a>
-        <a class="vw" href="/static/resume.pdf" target="_blank" rel="noopener">View in browser ↗</a>
-      </div>
     </div>
-    <div class="resume-r">
-      <iframe src="/static/resume.pdf" title="Résumé PDF preview"></iframe>
-      <div class="doc-cap">Last updated · Sep 2026</div>
+    <!-- Place resume PDF at:
+         C:\Dhritiraj Portfolio Website\staticfiles\resume.pdf
+         and main\static\resume.pdf -->
+    <div class="rlinks">
+      <a class="dl" href="/static/resume.pdf" download>Download PDF ↓</a>
+      <a class="vw" href="/static/resume.pdf" target="_blank" rel="noopener">Open in new tab ↗</a>
     </div>
   </div>
+  <iframe src="/static/resume.pdf" title="Résumé PDF"></iframe>
+  <div class="doc-cap">Last updated · Sep 2026</div>
 </section>
 
 <section id="projects" class="reveal">
@@ -350,8 +343,13 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
   <h2 class="big">Selected work.</h2>
   <p class="hint">— hover any project to expand</p>
   <div class="list" id="featured"></div>
-  <h3 class="more">More on GitHub</h3>
-  <div class="list small" id="repos"><div class="status">Loading repositories…</div></div>
+  <div class="ghmore">
+    <div>
+      <h3>More on GitHub</h3>
+      <p>14 public repositories — ML pipelines, web apps, AI experiments and more.</p>
+    </div>
+    <a href="https://github.com/dhritiraj-08" target="_blank" rel="noopener">View all repositories ↗</a>
+  </div>
 </section>
 
 <section id="contact" class="reveal">
@@ -382,10 +380,11 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
       </div>
       <div class="avail"><i></i>Available for opportunities</div>
     </div>
-    <form class="cform" id="form" action="mailto:dhritirajlahkarwork@gmail.com" method="POST" enctype="text/plain">
-      <div class="f"><label for="n">Your name</label><input id="n" name="name" type="text" placeholder="" required /></div>
-      <div class="f"><label for="e">Your email</label><input id="e" name="email" type="email" placeholder="" required /></div>
-      <div class="f"><label for="m">Your message</label><textarea id="m" name="message" rows="5" placeholder="" required></textarea></div>
+    <form class="cform" id="form" action="mailto:dhritirajlahkarwork@gmail.com" method="GET" autocomplete="off">
+      <input type="hidden" name="subject" value="Portfolio message" />
+      <div class="f"><label for="n">Your name</label><input id="n" name="name" type="text" placeholder="" autocomplete="off" required /></div>
+      <div class="f"><label for="e">Your email</label><input id="e" name="email" type="email" placeholder="" autocomplete="off" required /></div>
+      <div class="f"><label for="m">Your message</label><textarea id="m" name="body" rows="5" placeholder="" autocomplete="off" required></textarea></div>
       <button type="submit">Send message</button>
       <div class="note">Replies within 24 hours</div>
     </form>
@@ -685,11 +684,11 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
       'A 6-agent agentic career platform that automates the entire job search — from resume analysis and ATS scoring to AI voice interviews and automated email outreach via Gmail API. Built with human-in-loop approval at every step.'],
     ['Chronova AI', 'Dual-portal AI scheduling for students and institutions', 'Next.js 16, React 19, Zustand, OpenRouter, Supabase, PostgreSQL', 'https://github.com/dhritiraj-08/Chronova-ai', /chronova/i,
       'Dual-portal scheduling platform — students get an AI study coach, Pomodoro timer and burnout detection; institutions get a conflict-free timetable generator with teacher roster and multi-role auth.'],
-    ['SARTS', 'Real-time federated equipment rental — Caterpillar Hackathon 2025', 'Next.js 14, NextAuth.js, Supabase, Leaflet, Recharts', 'https://github.com/dhritiraj-08', /sarts/i,
+    ['SARTS', 'Real-time federated equipment rental — Caterpillar Hackathon 2025', 'Next.js 14, NextAuth.js, Supabase, Leaflet, Recharts', 'https://github.com/dhritiraj-08/SARTS', /sarts/i,
       'Real-time federated equipment rental platform built for the Caterpillar Hackathon 2025. 500 assets across 25 cities, 3 role-walled portals, live Leaflet map with geofence-breach detection and a custom PDF report builder.'],
-    ['The Agora Club', 'Gamified community platform with hand-rolled HMAC auth', 'Next.js 16, Prisma 7, PostgreSQL, Tailwind v4, Resend', 'https://github.com/dhritiraj-08', /agora/i,
+    ['The Agora Club', 'Gamified community platform with hand-rolled HMAC auth', 'Next.js 16, Prisma 7, PostgreSQL, Tailwind v4, Resend', 'https://github.com/dhritiraj-08/The-Agora-Club', /agora/i,
       'Full-stack gamified community platform with XP, streaks, badges and a leaderboard. Features a hand-rolled HMAC-SHA256 auth system with PBKDF2 hashing, rate-limited login and a 17-model Prisma schema.'],
-    ['Attendance System', 'Role-based attendance platform for Jain University', 'Next.js, PostgreSQL, Supabase', 'https://github.com/dhritiraj-08', /attendance/i,
+    ['Attendance System', 'Role-based attendance platform for Jain University', 'Next.js, PostgreSQL, Supabase', 'https://github.com/dhritiraj-08/Attendance-Management-System', /attendance/i,
       "Role-based attendance tracking platform delivered for Jain University's Placement Department. Real-time tracking, Supabase Auth, and separate Admin and Student dashboards."]
   ];
   const feat = document.getElementById('featured');
@@ -707,25 +706,13 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
 
   watchNums(feat);
 
-  const repos = document.getElementById('repos');
-  fetch('https://api.github.com/users/dhritiraj-08/repos?sort=updated&per_page=30')
-    .then(r => { if (!r.ok) throw 0; return r.json(); })
-    .then(all => {
-      const rows = feat.querySelectorAll('.row');
-      projects.forEach((p, i) => { const hit = all.find(r => p[4].test(r.name)); if (hit) rows[i].querySelector('.go').href = hit.html_url; });
-      const skip = ['dhritiraj_portfolio', 'dhritiraj-08', 'tushar_portfolio', 'practical-ml-coursera-prediction-assignment', 'amar-adda'];
-      const rest = all.filter(r => !r.fork && !projects.some(p => p[4].test(r.name)) && !skip.includes(r.name.toLowerCase()) && r.description && r.description.trim());
-      if (!rest.length) { repos.innerHTML = '<div class="status">Everything else lives on <a href="https://github.com/dhritiraj-08" target="_blank" rel="noopener">github.com/dhritiraj-08 ↗</a></div>'; return; }
-      repos.innerHTML = rest.map((r, i) => `
-        <div class="row">
-          <span class="n">${num(i)}</span>
-          <div><div class="name">${esc(r.name)}</div><div class="desc">${esc(r.description)}</div></div>
-          <a class="go" href="https://github.com/dhritiraj-08/${encodeURIComponent(r.name)}" target="_blank" rel="noopener">GitHub ↗</a>
-        </div>`).join('');
-      watchNums(repos);
-      resizeCodes();
-    })
-    .catch(() => { repos.innerHTML = '<div class="status">Couldn\'t load repositories. See <a href="https://github.com/dhritiraj-08" target="_blank" rel="noopener">github.com/dhritiraj-08 ↗</a></div>'; });
+  // compose the mailto so the sender's name and email land in the message body
+  document.getElementById('form').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    location.href = 'mailto:dhritirajlahkarwork@gmail.com?subject=' + encodeURIComponent('Portfolio message from ' + f.get('name')) +
+      '&body=' + encodeURIComponent(f.get('body') + '\n\n— ' + f.get('name') + ' (' + f.get('email') + ')');
+  });
 
 })();
 </script>
