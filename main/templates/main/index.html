@@ -81,8 +81,8 @@ h2.big { font-weight: 700; font-size: clamp(32px, 5vw, 48px); line-height: 1.1; 
 #cube { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; z-index: 0; }
 .about .bio { position: relative; z-index: 1; padding: 40px; font-size: 15px; line-height: 1.75; color: var(--text); }
 .about .bio p + p { margin-top: 1.3em; }
-.about-r { position: relative; }
-.about-r img { display: block; width: 100%; height: 380px; object-fit: cover; object-position: center 20%; filter: grayscale(30%) contrast(1.05) brightness(0.75); border-left: 2px solid rgba(232,255,71,0.25); }
+.about-r { position: relative; background: #1a1a0a; }
+.about-r img { display: block; width: 100%; height: 380px; object-fit: cover; object-position: center 20%; mix-blend-mode: luminosity; filter: grayscale(100%) contrast(1.2) brightness(0.6); border-left: 2px solid rgba(232,255,71,0.25); }
 .about-r::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(to right, rgba(6,6,8,0.85) 0%, rgba(6,6,8,0.3) 25%, transparent 50%); }
 .about-r::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(to bottom, rgba(6,6,8,0.5) 0%, transparent 25%), linear-gradient(to top, rgba(6,6,8,0.7) 0%, transparent 50%); }
 .about-r .tag { position: absolute; z-index: 2; left: 20px; bottom: 20px; font-family: var(--mono); }
@@ -134,8 +134,8 @@ td { font-size: 15px; color: var(--text); padding-right: 12px; }
 .rlinks .dl:hover { letter-spacing: 0.06em; }
 .rlinks .vw { color: var(--muted); transition: color 150ms; }
 .rlinks .vw:hover { color: var(--text); }
-#resume iframe { display: block; width: 100%; height: 80vh; min-height: 600px; max-height: 900px; margin-top: 40px; border: 1px solid rgba(232,255,71,0.2); border-radius: 0; background: #111; transition: border-color 200ms ease; }
-#resume iframe:hover { border-color: rgba(232,255,71,0.45); }
+#resume .rcanvas { margin-top: 40px; }
+#resume canvas { display: block; width: 100%; height: auto; background: #ffffff; border: 1px solid rgba(232,255,71,0.2); cursor: pointer; }
 .doc-cap { margin-top: 10px; font-family: var(--mono); font-size: 10px; color: var(--muted); }
 
 /* PROJECTS */
@@ -224,7 +224,6 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
   .row .go { grid-column: 2; text-align: left; opacity: 1; padding-top: 0; }
       .rhead { flex-direction: column; align-items: flex-start; gap: 20px; }
   .rlinks { flex-direction: column; align-items: flex-start; gap: 12px; }
-  #resume iframe { height: 70vh; min-height: 500px; }
   .ghmore { flex-direction: column; align-items: flex-start; }
   .ccols { display: block; }
   .cform { margin-top: 48px; }
@@ -334,7 +333,7 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
       <a class="vw" href="/static/resume.pdf" target="_blank" rel="noopener">Open in new tab ↗</a>
     </div>
   </div>
-  <iframe src="/static/resume.pdf" title="Résumé PDF"></iframe>
+  <div class="rcanvas"><canvas id="resume-canvas" aria-label="Résumé preview — click to open the PDF"></canvas></div>
   <div class="doc-cap">Last updated · Sep 2026</div>
 </section>
 
@@ -393,6 +392,7 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
 <footer><span>Dhritiraj Lahakar · 2026</span><span>Built with intent.</span></footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
 (() => {
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -725,6 +725,38 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
     </div>`).join('');
 
   watchNums(feat);
+
+  // ---------- resume: PDF.js renderer ----------
+  if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  let resumeTask = null;
+  async function renderResume() {
+    if (!window.pdfjsLib) return;
+    try {
+      const pdf = await pdfjsLib.getDocument('/static/resume.pdf').promise;
+      const page = await pdf.getPage(1);
+      const canvas = document.getElementById('resume-canvas');
+      const container = canvas.parentElement;
+      const containerWidth = container.clientWidth;
+      const viewport = page.getViewport({ scale: 1 });
+      const scale = containerWidth / viewport.width;
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      const scaledViewport = page.getViewport({ scale: scale * dpr });
+      if (resumeTask) resumeTask.cancel();
+      canvas.width = scaledViewport.width;
+      canvas.height = scaledViewport.height;
+      canvas.style.width = '100%';
+      canvas.style.height = 'auto';
+      resumeTask = page.render({ canvasContext: canvas.getContext('2d'), viewport: scaledViewport });
+      await resumeTask.promise;
+      canvas.onclick = () => window.open('/static/resume.pdf', '_blank');
+    } catch (e) {
+      if (e && e.name === 'RenderingCancelledException') return;
+      console.error('PDF render error:', e);
+    }
+  }
+  renderResume();
+  let resumeTimer = 0;
+  addEventListener('resize', () => { clearTimeout(resumeTimer); resumeTimer = setTimeout(renderResume, 300); });
 
   window.sendContactMessage = function sendContactMessage() {
     const name = document.getElementById('cf-name').value.trim();
