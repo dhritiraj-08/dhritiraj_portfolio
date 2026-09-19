@@ -74,22 +74,19 @@ h2.big { font-weight: 700; font-size: clamp(32px, 5vw, 48px); line-height: 1.1; 
 
 /* ABOUT */
 #about { padding-bottom: clamp(60px, 8vw, 110px); }
-.about { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; }
+.about { display: grid; grid-template-columns: minmax(0, 55fr) minmax(0, 45fr); align-items: start; }
 #about::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse 600px 400px at 95% 10%, rgba(232,255,71,0.03) 0%, transparent 70%); }
 #about > * { position: relative; z-index: 1; }
-.about .label { grid-row: 1; grid-column: 1 / 3; writing-mode: vertical-rl; font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--muted); }
-.about .lead-row { grid-row: 1; grid-column: 3 / 9; display: flex; align-items: flex-start; gap: 20px; }
-.ph { flex: none; width: 220px; }
-.frame { position: relative; width: 220px; height: 260px; overflow: hidden; border: 1px solid rgba(232,255,71,0.2); transition: border-color 200ms ease; }
-.frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: grayscale(20%) contrast(1.05); transition: filter 200ms ease; }
-.frame::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(6,6,8,0.6) 100%); pointer-events: none; }
-.frame:hover { border-color: rgba(232,255,71,0.5); }
-.frame:hover img { filter: grayscale(0%); }
-.cap { margin-top: 12px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--muted); }
-.about .bio { flex: 1 1 0; min-width: 0; max-width: 420px; font-size: 15px; line-height: 1.75; color: var(--text); }
+.about-l { position: relative; min-height: 400px; }
+#cube { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; z-index: 0; }
+.about .bio { position: relative; z-index: 1; padding: 40px; font-size: 15px; line-height: 1.75; color: var(--text); }
 .about .bio p + p { margin-top: 1.3em; }
-.side { grid-row: 1; grid-column: 9 / 13; padding-left: 2vw; }
-#cube { display: block; width: 320px; max-width: 100%; height: auto; aspect-ratio: 1 / 1; margin: 0 0 0 auto; }
+.about-r { position: relative; }
+.about-r img { display: block; width: 100%; height: 460px; object-fit: cover; object-position: center top; filter: grayscale(15%) contrast(1.08); border-left: 2px solid rgba(232,255,71,0.25); }
+.about-r::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,6,8,0.7) 0%, transparent 50%); pointer-events: none; }
+.about-r .tag { position: absolute; z-index: 1; left: 20px; bottom: 20px; font-family: var(--mono); }
+.about-r .tag b { display: block; font-weight: 400; font-size: 12px; letter-spacing: 0.1em; color: var(--text); }
+.about-r .tag span { display: block; margin-top: 2px; font-size: 10px; color: var(--muted); }
 .about-end { margin-top: clamp(60px, 8vw, 110px); }
 
 /* SKILLS */
@@ -136,25 +133,21 @@ td { font-size: 15px; color: var(--text); padding-right: 12px; }
 .rlinks .dl:hover { letter-spacing: 0.06em; }
 .rlinks .vw { color: var(--muted); transition: color 150ms; }
 .rlinks .vw:hover { color: var(--text); }
-.doc { position: relative; overflow: hidden; width: 220px; height: 300px; background: var(--surface); border: 1px solid rgba(232,255,71,0.15); transition: border-color 200ms ease, box-shadow 200ms ease; }
-.doc:hover { border-color: rgba(232,255,71,0.4); box-shadow: 0 0 30px rgba(232,255,71,0.06); }
-.doc i { display: block; height: 8px; border-radius: 2px; background: rgba(255,255,255,0.06); margin: 14px 20px; }
-.doc i:nth-child(1) { width: 60%; background: rgba(232,255,71,0.2); }
-.doc i:nth-child(2) { width: 35%; margin-top: 4px; }
-.doc i:nth-child(3) { width: 90%; } .doc i:nth-child(4) { width: 75%; } .doc i:nth-child(5) { width: 90%; }
-.doc i:nth-child(6) { width: 60%; } .doc i:nth-child(7) { width: 80%; } .doc i:nth-child(8) { width: 70%; }
-.doc::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: rgba(232,255,71,0.15); pointer-events: none; animation: docscan 3s linear infinite; }
-@keyframes docscan { from { top: 0; } to { top: 100%; } }
-.doc-cap { margin-top: 12px; font-family: var(--mono); font-size: 10px; color: var(--muted); }
+.resume-r iframe { display: block; width: 420px; max-width: 100%; height: 560px; border: 1px solid rgba(232,255,71,0.2); border-radius: 0; background: var(--surface); transition: border-color 200ms ease; }
+.resume-r iframe:hover { border-color: rgba(232,255,71,0.45); }
+.doc-cap { margin-top: 10px; font-family: var(--mono); font-size: 10px; color: var(--muted); }
 
 /* PROJECTS */
 #projects { position: relative; }
 #projects::before { content: ""; position: absolute; left: 0; top: 0; width: 120px; height: 100%; background-image: radial-gradient(rgba(232,255,71,0.08) 1px, transparent 1px); background-size: 28px 28px; pointer-events: none; z-index: 0; }
 #projects > * { position: relative; z-index: 1; }
+#projects > #codes { position: absolute; right: 0; top: 0; width: 280px; height: 100%; z-index: 0; pointer-events: none; }
+.hint { margin-top: 8px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
 .list { margin-top: clamp(36px, 5vw, 64px); border-top: 1px solid var(--line); }
 .row { display: grid; grid-template-columns: 56px minmax(0, 1.3fr) minmax(0, 1fr) 84px; column-gap: 24px; align-items: start; padding: 30px 16px 30px 0; border-bottom: 1px solid var(--line); transition: background 200ms ease; position: relative; }
 .row:hover { background: rgba(232,255,71,0.03); }
-.row .n { font-family: var(--head); font-weight: 800; font-size: 11px; color: var(--muted); padding-top: 9px; padding-left: 4px; }
+.row .n { font-family: var(--head); font-weight: 800; font-size: 11px; color: var(--accent); opacity: 0.4; transition: opacity 200ms ease; padding-top: 9px; padding-left: 4px; }
+.row:hover .n { opacity: 1; }
 .row .name { transition: text-shadow 200ms ease; font-family: var(--head); font-weight: 700; font-size: 22px; line-height: 1.2; }
 .row:hover .name { text-shadow: 0 0 20px rgba(232,255,71,0.3); }
 .row .desc { margin-top: 6px; font-size: 14px; color: #6B6B78 !important; }
@@ -167,24 +160,45 @@ td { font-size: 15px; color: var(--text); padding-right: 12px; }
 .list.small .n { padding-top: 3px; }
 .list.small .name { font-size: 15px; }
 .list.small .desc { font-family: var(--body); font-size: 13px; margin-top: 2px; }
-.list.small .go { padding-top: 2px; }
+.list.small .go { padding-top: 2px; font-size: 11px; color: var(--muted); opacity: 1; transition: color 150ms; }
+.list.small .go:hover { color: var(--accent); }
+/* featured rows: expand on hover */
+#featured .row { border-left: 2px solid transparent; transition: background 200ms ease, border-color 200ms ease, padding-left 200ms ease; }
+#featured .row:hover, #featured .row:focus-within { border-left-color: #E8FF47; padding-left: 18px; background: rgba(232,255,71,0.02); }
+#featured .row:hover .name { text-shadow: 0 0 20px rgba(232,255,71,0.25); }
+#featured .row:focus-within .go { opacity: 1; }
+.xp { max-height: 0; overflow: hidden; opacity: 0; transform: translateY(8px); transition: max-height 600ms ease, opacity 300ms ease, transform 300ms ease; }
+#featured .row:hover .xp, #featured .row:focus-within .xp { max-height: 280px; opacity: 1; transform: none; }
+.xp p { margin-top: 14px; font-size: 14px; line-height: 1.7; color: #C9C9D0; }
+.xp .live { display: inline-block; margin-top: 10px; font-family: var(--mono); font-size: 12px; color: var(--accent); }
 .status { padding: 20px 0; font-family: var(--mono); font-size: 12px; color: var(--muted); }
 .status a { color: var(--accent); }
 
 /* CONTACT */
-#contact { position: relative; }
+#contact { position: relative; border-top: 1px solid rgba(255,255,255,0.06); }
 #orbit { position: absolute; top: 60px; right: 6vw; width: 200px; height: 200px; pointer-events: none; }
-.contact { display: grid; grid-template-columns: 6fr 4fr; column-gap: 8vw; }
-.contact h2 { font-weight: 800; font-size: 56px; line-height: 1; letter-spacing: -0.02em; }
-.contact .lead { margin-top: 24px; font-size: 15px; color: var(--muted); max-width: 44ch; }
-.contact .links { margin-top: 40px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
-.contact .links a { font-family: var(--mono); font-size: 13px; background: linear-gradient(#E8FF47, #E8FF47) no-repeat left bottom / 0% 1px; padding-bottom: 2px; transition: color 150ms, background-size 300ms ease; }
-.contact .links a:hover { color: var(--accent); background-size: 100% 1px; }
-form { padding-top: 10px; display: flex; flex-direction: column; gap: 26px; }
-form input, form textarea { width: 100%; background: transparent; border: 0; border-bottom: 1px solid rgba(255,255,255,0.15); border-radius: 0; padding: 8px 0 10px; font: 400 14px var(--body); color: var(--text); resize: none; }
-form input::placeholder, form textarea::placeholder { color: var(--muted); }
-form input:focus, form textarea:focus { outline: none; border-bottom-color: var(--accent); }
-form button { align-self: flex-start; margin-top: 16px; background: none; border: 0; padding: 0; cursor: pointer; font: 400 13px var(--mono); color: var(--accent); }
+.ctop { text-align: center; }
+.ctop h2 { font-weight: 800; font-size: clamp(36px, 5vw, 64px); line-height: 1.05; letter-spacing: -0.02em; color: var(--text); }
+.ctop p { margin-top: 12px; font-size: 15px; color: var(--muted); }
+.ccols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 6vw; align-items: start; margin-top: clamp(40px, 6vw, 72px); }
+.cards { display: flex; flex-direction: column; gap: 16px; }
+.card { display: flex; align-items: center; gap: 16px; padding: 16px 20px; border: 1px solid rgba(255,255,255,0.07); background: var(--surface); cursor: pointer; transition: border-color 200ms, background 200ms; }
+.card:hover { border-color: rgba(232,255,71,0.4); background: rgba(232,255,71,0.03); }
+.card svg { flex: none; width: 24px; height: 24px; fill: none; stroke: #E8FF47; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.card .t { min-width: 0; }
+.card .t small { display: block; font-family: var(--mono); font-size: 10px; color: var(--muted); }
+.card .t span { display: block; font-size: 13px; color: var(--text); overflow-wrap: anywhere; }
+.card .arr { margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--accent); }
+.avail { display: flex; align-items: center; gap: 10px; margin-top: 32px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.avail i { width: 6px; height: 6px; border-radius: 50%; background: #22C55E; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.4); } }
+.cform label { display: block; margin-bottom: 6px; font-family: var(--mono); font-size: 10px; color: var(--muted); }
+.cform .f + .f { margin-top: 24px; }
+.cform input, .cform textarea { display: block; width: 100%; background: transparent; border: 0; border-bottom: 1px solid rgba(255,255,255,0.12); border-radius: 0; padding: 10px 0; color: var(--text); font: 400 14px var(--body); outline: none; resize: none; transition: border-bottom-color 150ms; }
+.cform input:focus, .cform textarea:focus { border-bottom-color: #E8FF47; }
+.cform button { display: block; width: 100%; margin-top: 24px; padding: 14px 0; background: #E8FF47; color: #060608; border: 0; border-radius: 0; font: 400 13px var(--mono); letter-spacing: 0.06em; cursor: pointer; transition: background 150ms; }
+.cform button:hover { background: #F5FF6B; }
+.cform .note { margin-top: 12px; text-align: center; font-family: var(--mono); font-size: 10px; color: var(--muted); }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
 /* FOOTER */
@@ -199,12 +213,10 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
   nav ul a { font-size: 11px; }
   h1 { font-size: clamp(40px, 9vw, 90px); }
   .vert { display: none; }
-  .about { display: block; }
-  .about .label { writing-mode: horizontal-tb; margin-bottom: 20px; }
-  .about .lead-row { display: block; }
-  .ph, .frame { width: 100%; }
-  .about .bio { margin-top: 24px; max-width: none; }
-  .side { padding-left: 0; margin-top: 48px; }
+  .about { grid-template-columns: 1fr; }
+  .about-r { order: -1; }
+  .about-r img { height: 280px; }
+  .about .bio { padding: 32px 22px; }
     th { width: 34%; padding-right: 10px; }
   td { font-size: 14px; }
   .cols { display: block; }
@@ -218,15 +230,16 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
   #orbit { display: none; }
   .resume { display: block; }
   .resume-r { margin-top: 48px; }
-  .contact { display: block; }
-  .contact h2 { font-size: 44px; }
-  form { margin-top: 56px; }
+  .resume-r iframe { width: 100%; height: 420px; }
+  .ccols { display: block; }
+  .cform { margin-top: 48px; }
   footer { flex-direction: column; }
 }
 @media (hover: none) { .row .go { opacity: 1; } }
+@media (hover: none), (max-width: 767px) { #featured .xp { max-height: none; opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  h1 span, .rv, tr, th, .doc::after { animation: none; transition: none; opacity: 1; transform: none; }
+  h1 span, .rv, tr, th, .avail i { animation: none; transition: none; opacity: 1; transform: none; }
   tr:hover { background-size: 0% 1px; }
 }
 </style>
@@ -256,20 +269,17 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
 
 <section id="about" class="reveal">
   <div class="about">
-    <div class="label">ABOUT</div>
-    <div class="lead-row">
-      <div class="ph">
-        <div class="frame"><img src="/static/img/profile.jpg" alt="Dhritiraj Lahakar" width="220" height="260" /></div>
-        <div class="cap">Dhritiraj Lahakar</div>
-      </div>
+    <div class="about-l">
+      <canvas id="cube" aria-hidden="true"></canvas>
       <div class="bio">
         <p>I'm a B.Tech CSE (AI &amp; ML) student at Jain University in Bengaluru, graduating in 2027 with a CGPA of 8.40. I build full stack products and the AI systems that sit inside them.</p>
         <p>At TapNex I worked on J-TAP, a SaaS platform for 8,000+ concurrent users, and on LIMP, an enterprise land management system. Both shipped with real role-based access, CI/CD and production data.</p>
         <p>What I care about most is agentic AI: multi-agent orchestration, RAG and tool-using LLMs that finish real tasks. Alongside that, I lead operations at Cognito Club, running campus tech events.</p>
       </div>
     </div>
-    <div class="side">
-      <canvas id="cube" width="320" height="320" aria-hidden="true"></canvas>
+    <div class="about-r">
+      <img src="/static/img/profile.jpg" alt="Dhritiraj Lahakar" width="600" height="460" />
+      <div class="tag"><b>Dhritiraj Lahakar</b><span>Bengaluru · 2026</span></div>
     </div>
   </div>
   <div class="hair about-end"></div>
@@ -329,14 +339,16 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
       </div>
     </div>
     <div class="resume-r">
-      <div class="doc" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <iframe src="/static/resume.pdf" title="Résumé PDF preview"></iframe>
       <div class="doc-cap">Last updated · Sep 2026</div>
     </div>
   </div>
 </section>
 
 <section id="projects" class="reveal">
+  <canvas id="codes" aria-hidden="true"></canvas>
   <h2 class="big">Selected work.</h2>
+  <p class="hint">— hover any project to expand</p>
   <div class="list" id="featured"></div>
   <h3 class="more">More on GitHub</h3>
   <div class="list small" id="repos"><div class="status">Loading repositories…</div></div>
@@ -344,21 +356,38 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
 
 <section id="contact" class="reveal">
   <canvas id="orbit" width="200" height="200" aria-hidden="true"></canvas>
-  <div class="contact">
+  <div class="ctop">
+    <h2>Let's build something real.</h2>
+    <p>Open to full-stack and AI/ML roles. Have a project? Let's talk.</p>
+  </div>
+  <div class="ccols">
     <div>
-      <h2>Let's build<br>something<br>real.</h2>
-      <p class="lead">I'm looking for full-stack and AI/ML roles. If you're building something interesting, I want to hear about it.</p>
-      <div class="links">
-        <a href="mailto:dhritirajlahkarwork@gmail.com">dhritirajlahkarwork@gmail.com ↗</a>
-        <a href="https://linkedin.com/in/dhritiraj-lahakar" target="_blank" rel="noopener">linkedin.com/in/dhritiraj-lahakar ↗</a>
-        <a href="https://github.com/dhritiraj-08" target="_blank" rel="noopener">github.com/dhritiraj-08 ↗</a>
+      <div class="cards">
+        <a class="card" href="mailto:dhritirajlahkarwork@gmail.com">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M2 6.5 12 13.5 22 6.5"/></svg>
+          <div class="t"><small>Email</small><span>dhritirajlahkarwork@gmail.com</span></div><span class="arr">↗</span>
+        </a>
+        <a class="card" href="tel:+916900921547">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="1.5" width="11" height="21" rx="2.5"/><circle cx="12" cy="5" r="0.8"/><path d="M10.5 19.5h3"/></svg>
+          <div class="t"><small>Phone</small><span>+91 6900921547</span></div><span class="arr">↗</span>
+        </a>
+        <a class="card" href="https://linkedin.com/in/dhritiraj-lahakar" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7.5 10.5v6M7.5 7.6v.1M11.5 16.5v-6M11.5 13c0-1.6 1.2-2.5 2.6-2.5s2.4.9 2.4 2.6v3.4"/></svg>
+          <div class="t"><small>LinkedIn</small><span>dhritiraj-lahakar</span></div><span class="arr">↗</span>
+        </a>
+        <a class="card" href="https://github.com/dhritiraj-08" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M5.6 9.6 5 3.5l4.6 2.6M18.4 9.6 19 3.5l-4.6 2.6"/></svg>
+          <div class="t"><small>GitHub</small><span>dhritiraj-08</span></div><span class="arr">↗</span>
+        </a>
       </div>
+      <div class="avail"><i></i>Available for opportunities</div>
     </div>
-    <form id="form">
-      <label class="sr" for="n">Name</label><input id="n" name="name" type="text" placeholder="Name" required />
-      <label class="sr" for="e">Email</label><input id="e" name="email" type="email" placeholder="Email" required />
-      <label class="sr" for="m">Message</label><textarea id="m" name="message" rows="4" placeholder="Message" required></textarea>
-      <button type="submit">Send it →</button>
+    <form class="cform" id="form" action="mailto:dhritirajlahkarwork@gmail.com" method="POST" enctype="text/plain">
+      <div class="f"><label for="n">Your name</label><input id="n" name="name" type="text" placeholder="" required /></div>
+      <div class="f"><label for="e">Your email</label><input id="e" name="email" type="email" placeholder="" required /></div>
+      <div class="f"><label for="m">Your message</label><textarea id="m" name="message" rows="5" placeholder="" required></textarea></div>
+      <button type="submit">Send message</button>
+      <div class="note">Replies within 24 hours</div>
     </form>
   </div>
 </section>
@@ -382,7 +411,7 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
 
   // stagger: heading first, content 120ms later
   document.querySelectorAll('.reveal').forEach(sec => {
-    const kids = sec.id === 'contact' ? sec.querySelectorAll('h2, .lead, .links, form') : sec.children;
+    const kids = sec.id === 'contact' ? sec.querySelectorAll('h2, .ctop p, .ccols') : sec.children;
     [...kids].forEach(k => k.classList.add('rv'));
     io.observe(sec);
   });
@@ -489,9 +518,8 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
     let renderer;
     try { renderer = new THREE.WebGLRenderer({ canvas: cv, alpha: true, antialias: true }); } catch (err) { return; }
     renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
-    renderer.setSize(320, 320, false);
     renderer.setClearColor(0x000000, 0);
-    const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(50, 1, 0.1, 50);
+    const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(50, 1.5, 0.1, 50);
     cam.position.z = 7; cam.lookAt(0, 0, 0);
 
     const light = new THREE.PointLight(0xE8FF47, 1.5);
@@ -501,16 +529,16 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
     // outer cube: lit surface + wireframe overlay, rotating together
     const outer = new THREE.Group(), g1 = new THREE.BoxGeometry(2.2, 2.2, 2.2);
     outer.add(new THREE.Mesh(g1, new THREE.MeshPhongMaterial({ color: 0x000000, emissive: 0x1a1a00, wireframe: false })));
-    outer.add(new THREE.Mesh(g1, new THREE.MeshBasicMaterial({ color: 0xE8FF47, wireframe: true, transparent: true, opacity: 0.7 })));
+    outer.add(new THREE.Mesh(g1, new THREE.MeshBasicMaterial({ color: 0xE8FF47, wireframe: true, transparent: true, opacity: 0.18 })));
     scene.add(outer);
 
     // inner cube, counter-rotating
-    const inner = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.2, 1.2), new THREE.MeshBasicMaterial({ color: 0xE8FF47, wireframe: true, transparent: true, opacity: 0.3 }));
+    const inner = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.2, 1.2), new THREE.MeshBasicMaterial({ color: 0xE8FF47, wireframe: true, transparent: true, opacity: 0.10 }));
     scene.add(inner);
 
     // orbiting spheres, each with three fading ghost copies behind it
-    const R = 2.8, orbs = [], og = new THREE.SphereGeometry(0.15, 8, 8), om = new THREE.MeshBasicMaterial({ color: 0xE8FF47 });
-    const ghostMats = [0.8, 0.5, 0.25].map(o => new THREE.MeshBasicMaterial({ color: 0xE8FF47, transparent: true, opacity: o }));
+    const R = 2.8, orbs = [], og = new THREE.SphereGeometry(0.15, 8, 8), om = new THREE.MeshBasicMaterial({ color: 0xE8FF47, transparent: true, opacity: 0.25 });
+    const ghostMats = [0.10, 0.06, 0.03].map(o => new THREE.MeshBasicMaterial({ color: 0xE8FF47, transparent: true, opacity: o }));
     for (let i = 0; i < 3; i++) {
       const m = new THREE.Mesh(og, om); scene.add(m);
       const ghosts = ghostMats.map(gm => { const gh = new THREE.Mesh(og, gm); scene.add(gh); return gh; });
@@ -518,7 +546,7 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
     }
 
     // particles
-    const N = 60, B = 4.0, pg = new THREE.SphereGeometry(0.04, 6, 6), pmat = new THREE.MeshBasicMaterial({ color: 0xE8FF47, transparent: true, opacity: 0.4 }), parts = [];
+    const N = 60, B = 4.0, pg = new THREE.SphereGeometry(0.04, 6, 6), pmat = new THREE.MeshBasicMaterial({ color: 0xE8FF47, transparent: true, opacity: 0.15 }), parts = [];
     for (let i = 0; i < N; i++) {
       const m = new THREE.Mesh(pg, pmat);
       let v; do { v = new THREE.Vector3((Math.random() * 2 - 1) * B, (Math.random() * 2 - 1) * B, (Math.random() * 2 - 1) * B); } while (v.length() > B);
@@ -534,8 +562,15 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
         o.ghosts.forEach((gh, j) => put(gh, angle + o.off - (j + 1) * 0.16, sec, o.off - (j + 1) * 0.2));
       });
     }
+    function size() {
+      const box = cv.parentElement, w = Math.max(1, box.clientWidth), h = Math.max(1, box.clientHeight);
+      renderer.setSize(w, h, false);
+      cam.aspect = w / h; cam.updateProjectionMatrix();
+      renderer.render(scene, cam);
+    }
     place(0);
-    renderer.render(scene, cam);
+    size();
+    if (window.ResizeObserver) new ResizeObserver(size).observe(cv.parentElement); else addEventListener('resize', size);
     animate(cv, t => {
       outer.rotation.x += 0.008; outer.rotation.y += 0.012;
       inner.rotation.x -= 0.005; inner.rotation.y -= 0.008;
@@ -547,6 +582,43 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
       scene.rotation.y += 0.002;
       renderer.render(scene, cam);
     });
+  })();
+
+  // ---------- projects: falling code stream ----------
+  let resizeCodes = () => {};
+  (function codeStream() {
+    const cv = document.getElementById('codes'), sec = document.getElementById('projects'), W = 280;
+    const glyphs = ['{', '}', '[', ']', '(', ')', '=>', '<', '>', '/', '\\', ';', ':', '0', '1'];
+    const pick = () => glyphs[Math.floor(Math.random() * glyphs.length)];
+    const cols = Array.from({ length: 8 }, (_, i) => {
+      const len = 10 + Math.floor(Math.random() * 8);
+      return { x: 18 + i * 34, y: Math.random() * 600, v: 1.2 + Math.random() * 1.6, len, ch: Array.from({ length: len }, pick) };
+    });
+    let H = 0, ctx;
+    function size() { H = sec.offsetHeight; ctx = fit(cv, W, H); if (reduced) draw(); }
+    resizeCodes = size;
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.font = '11px "DM Mono", monospace'; ctx.textAlign = 'center';
+      for (const c of cols) {
+        for (let k = 0; k < c.len; k++) {
+          const y = c.y - k * 22;
+          if (y < -12 || y > H + 12) continue;
+          ctx.fillStyle = k === 0 ? 'rgba(232,255,71,0.25)' : 'rgba(232,255,71,0.06)';
+          ctx.fillText(c.ch[k], c.x, y);
+        }
+        if (!reduced) {
+          c.y += c.v;
+          if (c.y - c.len * 22 > H) { c.y = -Math.random() * 200; c.v = 1.2 + Math.random() * 1.6; c.ch = Array.from({ length: c.len }, pick); }
+        }
+      }
+    }
+    size();
+    let t = 0;
+    const later = () => { clearTimeout(t); t = setTimeout(size, 150); };
+    if (window.ResizeObserver) new ResizeObserver(later).observe(sec);
+    addEventListener('resize', later); addEventListener('load', later);
+    animate(cv, draw);
   })();
 
   // ---------- skills: circuit trace ----------
@@ -599,27 +671,36 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
     function draw(t) {
       const s = t / 1000;
       ctx.clearRect(0, 0, S, S); ctx.lineWidth = 1;
-      ctx.strokeStyle = 'rgba(232,255,71,0.08)'; ctx.beginPath(); ctx.arc(c, c, 70, 0, 6.2832); ctx.stroke();
-      ctx.strokeStyle = 'rgba(232,255,71,0.05)'; ctx.beginPath(); ctx.arc(c, c, 50, 0, 6.2832); ctx.stroke();
-      ctx.fillStyle = '#E8FF47'; ctx.beginPath(); ctx.arc(c + 70 * Math.cos(s * 0.4), c + 70 * Math.sin(s * 0.4), 4, 0, 6.2832); ctx.fill();
-      ctx.fillStyle = 'rgba(232,255,71,0.4)'; ctx.beginPath(); ctx.arc(c + 50 * Math.cos(-s * 0.7), c + 50 * Math.sin(-s * 0.7), 2.5, 0, 6.2832); ctx.fill();
+      ctx.strokeStyle = 'rgba(232,255,71,0.12)'; ctx.beginPath(); ctx.arc(c, c, 70, 0, 6.2832); ctx.stroke();
+      ctx.strokeStyle = 'rgba(232,255,71,0.08)'; ctx.beginPath(); ctx.arc(c, c, 50, 0, 6.2832); ctx.stroke();
+      ctx.fillStyle = '#E8FF47'; ctx.beginPath(); ctx.arc(c + 70 * Math.cos(s * 0.4), c + 70 * Math.sin(s * 0.4), 5, 0, 6.2832); ctx.fill();
+      ctx.fillStyle = 'rgba(232,255,71,0.5)'; ctx.beginPath(); ctx.arc(c + 50 * Math.cos(-s * 0.7), c + 50 * Math.sin(-s * 0.7), 3, 0, 6.2832); ctx.fill();
     }
     animate(cv, draw);
   })();
 
 
   const projects = [
-    ['CareerPilot AI', '6-agent agentic career platform with LLM orchestration, RAG and Gmail API', 'Next.js 14, LangGraph, LangChain, OpenRouter, Supabase', 'https://github.com/dhritiraj-08/CareerPilot-AI', /career.?pilot/i],
-    ['Chronova AI', 'Dual-portal AI scheduling for students and institutions', 'Next.js 16, Zustand, OpenRouter, Supabase, PostgreSQL', 'https://github.com/dhritiraj-08/Chronova-ai', /chronova/i],
-    ['SARTS', 'Real-time federated equipment rental — Caterpillar Hackathon 2025', 'Next.js 14, NextAuth, Supabase, Leaflet, Recharts', 'https://github.com/dhritiraj-08', /sarts/i],
-    ['The Agora Club', 'Gamified community platform with hand-rolled HMAC auth', 'Next.js 16, Prisma 7, PostgreSQL, Resend', 'https://github.com/dhritiraj-08', /agora/i],
-    ['Attendance System', 'Role-based attendance platform for Jain University', 'Next.js, PostgreSQL, Supabase', 'https://github.com/dhritiraj-08', /attendance/i]
+    ['CareerPilot AI', '6-agent agentic career platform with LLM orchestration, RAG and Gmail API', 'Next.js 14, LangGraph, LangChain, RAG, OpenRouter, Supabase, PostgreSQL', 'https://github.com/dhritiraj-08/CareerPilot-AI', /career.?pilot/i,
+      'A 6-agent agentic career platform that automates the entire job search — from resume analysis and ATS scoring to AI voice interviews and automated email outreach via Gmail API. Built with human-in-loop approval at every step.'],
+    ['Chronova AI', 'Dual-portal AI scheduling for students and institutions', 'Next.js 16, React 19, Zustand, OpenRouter, Supabase, PostgreSQL', 'https://github.com/dhritiraj-08/Chronova-ai', /chronova/i,
+      'Dual-portal scheduling platform — students get an AI study coach, Pomodoro timer and burnout detection; institutions get a conflict-free timetable generator with teacher roster and multi-role auth.'],
+    ['SARTS', 'Real-time federated equipment rental — Caterpillar Hackathon 2025', 'Next.js 14, NextAuth.js, Supabase, Leaflet, Recharts', 'https://github.com/dhritiraj-08', /sarts/i,
+      'Real-time federated equipment rental platform built for the Caterpillar Hackathon 2025. 500 assets across 25 cities, 3 role-walled portals, live Leaflet map with geofence-breach detection and a custom PDF report builder.'],
+    ['The Agora Club', 'Gamified community platform with hand-rolled HMAC auth', 'Next.js 16, Prisma 7, PostgreSQL, Tailwind v4, Resend', 'https://github.com/dhritiraj-08', /agora/i,
+      'Full-stack gamified community platform with XP, streaks, badges and a leaderboard. Features a hand-rolled HMAC-SHA256 auth system with PBKDF2 hashing, rate-limited login and a 17-model Prisma schema.'],
+    ['Attendance System', 'Role-based attendance platform for Jain University', 'Next.js, PostgreSQL, Supabase', 'https://github.com/dhritiraj-08', /attendance/i,
+      "Role-based attendance tracking platform delivered for Jain University's Placement Department. Real-time tracking, Supabase Auth, and separate Admin and Student dashboards."]
   ];
   const feat = document.getElementById('featured');
   feat.innerHTML = projects.map((p, i) => `
     <div class="row">
       <span class="n">${num(i)}</span>
-      <div><div class="name">${esc(p[0])}</div><div class="desc">${esc(p[1])}</div></div>
+      <div>
+        <div class="name">${esc(p[0])}</div>
+        <div class="desc">${esc(p[1])}</div>
+        <div class="xp"><p>${esc(p[5])}</p>${p[6] ? `<a class="live" href="${esc(p[6])}" target="_blank" rel="noopener">Live ↗</a>` : ''}</div>
+      </div>
       <div class="tech">${esc(p[2])}</div>
       <a class="go" href="${p[3]}" target="_blank" rel="noopener">GitHub ↗</a>
     </div>`).join('');
@@ -639,18 +720,13 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
         <div class="row">
           <span class="n">${num(i)}</span>
           <div><div class="name">${esc(r.name)}</div><div class="desc">${esc(r.description)}</div></div>
-          <a class="go" href="${esc(r.html_url)}" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="go" href="https://github.com/dhritiraj-08/${encodeURIComponent(r.name)}" target="_blank" rel="noopener">GitHub ↗</a>
         </div>`).join('');
       watchNums(repos);
+      resizeCodes();
     })
     .catch(() => { repos.innerHTML = '<div class="status">Couldn\'t load repositories. See <a href="https://github.com/dhritiraj-08" target="_blank" rel="noopener">github.com/dhritiraj-08 ↗</a></div>'; });
 
-  document.getElementById('form').addEventListener('submit', e => {
-    e.preventDefault();
-    const f = new FormData(e.target);
-    location.href = 'mailto:dhritirajlahkarwork@gmail.com?subject=' + encodeURIComponent('Portfolio message from ' + f.get('name')) +
-      '&body=' + encodeURIComponent(f.get('message') + '\n\n— ' + f.get('name') + ' (' + f.get('email') + ')');
-  });
 })();
 </script>
 </body>
