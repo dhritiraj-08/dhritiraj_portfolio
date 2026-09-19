@@ -82,9 +82,10 @@ h2.big { font-weight: 700; font-size: clamp(32px, 5vw, 48px); line-height: 1.1; 
 .about .bio { position: relative; z-index: 1; padding: 40px; font-size: 15px; line-height: 1.75; color: var(--text); }
 .about .bio p + p { margin-top: 1.3em; }
 .about-r { position: relative; }
-.about-r img { display: block; width: 100%; height: 460px; object-fit: cover; object-position: center top; filter: grayscale(15%) contrast(1.08); border-left: 2px solid rgba(232,255,71,0.25); }
-.about-r::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,6,8,0.7) 0%, transparent 50%); pointer-events: none; }
-.about-r .tag { position: absolute; z-index: 1; left: 20px; bottom: 20px; font-family: var(--mono); }
+.about-r img { display: block; width: 100%; height: 380px; object-fit: cover; object-position: center 20%; filter: grayscale(30%) contrast(1.05) brightness(0.75); border-left: 2px solid rgba(232,255,71,0.25); }
+.about-r::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(to right, rgba(6,6,8,0.85) 0%, rgba(6,6,8,0.3) 25%, transparent 50%); }
+.about-r::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(to bottom, rgba(6,6,8,0.5) 0%, transparent 25%), linear-gradient(to top, rgba(6,6,8,0.7) 0%, transparent 50%); }
+.about-r .tag { position: absolute; z-index: 2; left: 20px; bottom: 20px; font-family: var(--mono); }
 .about-r .tag b { display: block; font-weight: 400; font-size: 12px; letter-spacing: 0.1em; color: var(--text); }
 .about-r .tag span { display: block; margin-top: 2px; font-size: 10px; color: var(--muted); }
 .about-end { margin-top: clamp(60px, 8vw, 110px); }
@@ -172,7 +173,7 @@ td { font-size: 15px; color: var(--text); padding-right: 12px; }
 
 /* CONTACT */
 #contact { position: relative; border-top: 1px solid rgba(255,255,255,0.06); }
-#orbit { position: absolute; top: 60px; right: 6vw; width: 200px; height: 200px; pointer-events: none; }
+#contour { position: absolute; top: 0; right: 0; width: 45%; height: 100%; z-index: 0; pointer-events: none; display: block; }
 .ctop { text-align: center; }
 .ctop h2 { font-weight: 800; font-size: clamp(36px, 5vw, 64px); line-height: 1.05; letter-spacing: -0.02em; color: var(--text); }
 .ctop p { margin-top: 12px; font-size: 15px; color: var(--muted); }
@@ -221,8 +222,7 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
   .row { grid-template-columns: 36px 1fr; padding: 24px 0; row-gap: 10px; }
   .row .tech { grid-column: 2; text-align: left; padding-top: 0; }
   .row .go { grid-column: 2; text-align: left; opacity: 1; padding-top: 0; }
-      #orbit { display: none; }
-  .rhead { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .rhead { flex-direction: column; align-items: flex-start; gap: 20px; }
   .rlinks { flex-direction: column; align-items: flex-start; gap: 12px; }
   #resume iframe { height: 70vh; min-height: 500px; }
   .ghmore { flex-direction: column; align-items: flex-start; }
@@ -353,7 +353,7 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
 </section>
 
 <section id="contact" class="reveal">
-  <canvas id="orbit" width="200" height="200" aria-hidden="true"></canvas>
+  <canvas id="contour" aria-hidden="true"></canvas>
   <div class="ctop">
     <h2>Let's build something real.</h2>
     <p>Open to full-stack and AI/ML roles. Have a project? Let's talk.</p>
@@ -380,14 +380,13 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
       </div>
       <div class="avail"><i></i>Available for opportunities</div>
     </div>
-    <form class="cform" id="form" action="mailto:dhritirajlahkarwork@gmail.com" method="GET" autocomplete="off">
-      <input type="hidden" name="subject" value="Portfolio message" />
-      <div class="f"><label for="n">Your name</label><input id="n" name="name" type="text" placeholder="" autocomplete="off" required /></div>
-      <div class="f"><label for="e">Your email</label><input id="e" name="email" type="email" placeholder="" autocomplete="off" required /></div>
-      <div class="f"><label for="m">Your message</label><textarea id="m" name="body" rows="5" placeholder="" autocomplete="off" required></textarea></div>
-      <button type="submit">Send message</button>
+    <div class="cform" id="contact-form">
+      <div class="f"><label for="cf-name">Your name</label><input id="cf-name" name="name" type="text" placeholder="" autocomplete="off" /></div>
+      <div class="f"><label for="cf-email">Your email</label><input id="cf-email" name="email" type="email" placeholder="" autocomplete="off" /></div>
+      <div class="f"><label for="cf-message">Your message</label><textarea id="cf-message" name="message" rows="5" placeholder="" autocomplete="off"></textarea></div>
+      <button type="button" id="cf-submit" onclick="sendContactMessage()">Send message</button>
       <div class="note">Replies within 24 hours</div>
-    </form>
+    </div>
   </div>
 </section>
 
@@ -663,18 +662,39 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
     animate(cv, draw);
   })();
 
-  // ---------- contact: orbiting dots ----------
-  (function orbit() {
-    const cv = document.getElementById('orbit'), S = 200, c = S / 2;
-    const ctx = fit(cv, S, S);
+  // ---------- contact: morphing contour lines ----------
+  (function contours() {
+    const cv = document.getElementById('contour'), sec = document.getElementById('contact');
+    const L = 6, P = 8;
+    const layers = Array.from({ length: L }, (_, i) => ({
+      r: 60 + i * 24, speed: 0.3 + Math.random() * 0.5,
+      pts: Array.from({ length: P }, (_, k) => ({ a: k / P * 6.2832, f: 0.85 + Math.random() * 0.3, ph: Math.random() * 6.2832 })),
+      alpha: 0.18 - (0.12 * i) / (L - 1)
+    }));
+    let W = 0, H = 0, ctx;
+    function size() { W = cv.clientWidth; H = cv.clientHeight; ctx = fit(cv, W, H); if (reduced) draw(0); }
     function draw(t) {
-      const s = t / 1000;
-      ctx.clearRect(0, 0, S, S); ctx.lineWidth = 1;
-      ctx.strokeStyle = 'rgba(232,255,71,0.12)'; ctx.beginPath(); ctx.arc(c, c, 70, 0, 6.2832); ctx.stroke();
-      ctx.strokeStyle = 'rgba(232,255,71,0.08)'; ctx.beginPath(); ctx.arc(c, c, 50, 0, 6.2832); ctx.stroke();
-      ctx.fillStyle = '#E8FF47'; ctx.beginPath(); ctx.arc(c + 70 * Math.cos(s * 0.4), c + 70 * Math.sin(s * 0.4), 5, 0, 6.2832); ctx.fill();
-      ctx.fillStyle = 'rgba(232,255,71,0.5)'; ctx.beginPath(); ctx.arc(c + 50 * Math.cos(-s * 0.7), c + 50 * Math.sin(-s * 0.7), 3, 0, 6.2832); ctx.fill();
+      const s = t / 1000, cx = W / 2, cy = H / 2;
+      ctx.clearRect(0, 0, W, H); ctx.lineWidth = 1;
+      for (const ly of layers) {
+        const q = ly.pts.map(p => ({
+          x: cx + Math.cos(p.a) * ly.r * p.f + Math.sin(s * ly.speed + p.ph) * 8,
+          y: cy + Math.sin(p.a) * ly.r * 0.75 * p.f + Math.cos(s * ly.speed * 0.7 + p.ph) * 8
+        }));
+        ctx.strokeStyle = `rgba(232,255,71,${ly.alpha.toFixed(3)})`;
+        ctx.beginPath(); ctx.moveTo(q[0].x, q[0].y);
+        for (let i = 0; i < P; i++) {
+          const p0 = q[(i - 1 + P) % P], p1 = q[i], p2 = q[(i + 1) % P], p3 = q[(i + 2) % P];
+          ctx.bezierCurveTo(p1.x + (p2.x - p0.x) / 6, p1.y + (p2.y - p0.y) / 6, p2.x - (p3.x - p1.x) / 6, p2.y - (p3.y - p1.y) / 6, p2.x, p2.y);
+        }
+        ctx.closePath(); ctx.stroke();
+      }
     }
+    size();
+    let tm = 0;
+    const later = () => { clearTimeout(tm); tm = setTimeout(size, 150); };
+    if (window.ResizeObserver) new ResizeObserver(later).observe(sec);
+    addEventListener('resize', later); addEventListener('load', later);
     animate(cv, draw);
   })();
 
@@ -706,13 +726,24 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
 
   watchNums(feat);
 
-  // compose the mailto so the sender's name and email land in the message body
-  document.getElementById('form').addEventListener('submit', e => {
-    e.preventDefault();
-    const f = new FormData(e.target);
-    location.href = 'mailto:dhritirajlahkarwork@gmail.com?subject=' + encodeURIComponent('Portfolio message from ' + f.get('name')) +
-      '&body=' + encodeURIComponent(f.get('body') + '\n\n— ' + f.get('name') + ' (' + f.get('email') + ')');
-  });
+  window.sendContactMessage = function sendContactMessage() {
+    const name = document.getElementById('cf-name').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    const message = document.getElementById('cf-message').value.trim();
+
+    if (!name || !email || !message) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    const subject = encodeURIComponent('Portfolio Contact from ' + name);
+    const body = encodeURIComponent(
+      'From: ' + name + '\nEmail: ' + email + '\n\n' + message
+    );
+
+    window.location.href =
+      'mailto:dhritirajlahkarwork@gmail.com?subject=' + subject + '&body=' + body;
+  };
 
 })();
 </script>
