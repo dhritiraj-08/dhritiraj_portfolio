@@ -8,7 +8,7 @@
 <meta name="description" content="Dhritiraj Lahakar is a full stack and agentic AI engineer in Bengaluru, India." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Sans:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Sans:wght@400;500&family=Syne:wght@500;700;800&display=swap" rel="stylesheet" />
 <style>
 :root {
   --bg: #060608;
@@ -31,8 +31,6 @@ h1, h2, h3 { font-family: var(--head); }
 ::selection { background: var(--accent); color: #060608; }
 :focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
 
-/* BACKGROUND CANVAS */
-#bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block; }
 header, section, footer { position: relative; z-index: 1; }
 
 /* NAV */
@@ -46,12 +44,14 @@ nav ul a:hover { color: var(--text); }
 /* HERO */
 #hero { position: relative; min-height: 100vh; min-height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 var(--pad) 6vh; }
 #hero::before { content: ""; position: absolute; width: 800px; height: 800px; border-radius: 50%; border: 1px solid rgba(232,255,71,0.06); top: -260px; right: -220px; pointer-events: none; }
-.meta { position: absolute; top: 88px; left: var(--pad); font-family: var(--mono); font-size: 11px; line-height: 1.8; color: var(--muted); }
-.vert { position: absolute; right: var(--pad); bottom: 6vh; writing-mode: vertical-rl; font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; color: var(--muted); }
+#hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block; }
+#hero > h1, #hero > .lede, #hero > .cta { position: relative; z-index: 1; }
+.meta { z-index: 1; position: absolute; top: 88px; left: var(--pad); font-family: var(--mono); font-size: 11px; line-height: 1.8; color: var(--muted); }
+.vert { z-index: 1; position: absolute; right: var(--pad); bottom: 6vh; writing-mode: vertical-rl; font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; color: var(--muted); }
 h1 { font-weight: 800; font-size: clamp(60px, 10vw, 140px); line-height: 0.95; letter-spacing: -0.02em; }
 h1 span { position: relative; display: block; opacity: 0; transform: translateY(12px); animation: in 600ms ease forwards; }
-h1 span:nth-child(2) { color: var(--accent); animation-delay: 120ms; }
-h1 span:nth-child(3) { animation-delay: 240ms; }
+h1 span:nth-child(1) { font-weight: 800; font-size: clamp(52px, 8vw, 110px); color: var(--text); letter-spacing: -0.02em; line-height: 1; }
+h1 span:nth-child(2) { font-weight: 500; font-size: clamp(14px, 1.6vw, 20px); color: var(--muted); letter-spacing: 0.14em; margin-top: 10px; margin-bottom: 0; animation-delay: 120ms; }
 @keyframes in { to { opacity: 1; transform: none; } }
 h1 span::after { content: attr(data-text); position: absolute; left: 0; top: 0; color: var(--accent); opacity: 0; transform: translateX(-3px); pointer-events: none; }
 h1 span.done { animation: none; opacity: 1; transform: none; }
@@ -78,17 +78,14 @@ h2.big { font-weight: 700; font-size: clamp(32px, 5vw, 48px); line-height: 1.1; 
 .about .label { grid-column: 1 / 3; writing-mode: vertical-rl; font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--muted); }
 .about .bio { grid-column: 3 / 8; font-size: 17px; line-height: 1.75; max-width: 65ch; }
 .about .bio p + p { margin-top: 1.3em; }
-.stats { grid-column: 8 / 13; display: flex; flex-direction: column; align-items: flex-start; padding-left: 4vw; }
-.stat b { display: block; font-family: var(--head); font-weight: 700; font-size: 52px; line-height: 1; color: var(--accent); }
-.stat span { display: block; margin-top: 8px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
-.stat:nth-child(2) { margin-top: 60px; margin-left: 10vw; }
-.stat:nth-child(3) { margin-top: 40px; margin-left: 2vw; }
-.stat:nth-child(4) { margin-top: 80px; margin-left: 8vw; }
+.side { grid-column: 8 / 13; padding-left: 4vw; }
+#nn { display: block; width: 280px; height: 160px; max-width: 100%; margin: 0 0 0 auto; }
 .about-end { margin-top: clamp(60px, 8vw, 110px); }
 
 /* SKILLS */
 #skills .sub { margin-top: 14px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
-table { width: 100%; border-collapse: collapse; margin-top: clamp(36px, 5vw, 64px); }
+#trace { display: block; width: 100%; height: 60px; margin-top: 28px; }
+table { width: 100%; border-collapse: collapse; margin-top: 12px; }
 tr { border-bottom: 1px solid rgba(255,255,255,0.06); transition: background-color 200ms ease, background-size 400ms ease; background-image: linear-gradient(rgba(232,255,71,0.5), rgba(232,255,71,0.5)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1px; }
 tr:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
 tr:hover { background-color: rgba(232,255,71,0.03); background-size: 100% 1px; }
@@ -98,6 +95,9 @@ th { transition: color 200ms ease; width: 24%; font-family: var(--mono); font-si
 td { font-size: 15px; color: var(--text); padding-right: 12px; }
 
 /* EXPERIENCE */
+#experience { position: relative; }
+#experience::before { content: ""; position: absolute; top: 0; right: 0; width: 35%; height: 100%; background: repeating-linear-gradient(135deg, transparent, transparent 28px, rgba(232,255,71,0.025) 28px, rgba(232,255,71,0.025) 29px); pointer-events: none; z-index: 0; }
+#experience > * { position: relative; z-index: 1; }
 .cols { display: grid; grid-template-columns: 1fr 1fr; margin-top: clamp(36px, 5vw, 64px); }
 .col { padding-right: clamp(24px, 4vw, 64px); }
 .col + .col { padding-right: 0; padding-left: clamp(24px, 4vw, 64px); border-left: 1px solid var(--line); }
@@ -110,6 +110,9 @@ td { font-size: 15px; color: var(--text); padding-right: 12px; }
 .col p b { font-weight: 500; color: var(--text); }
 
 /* PROJECTS */
+#projects { position: relative; }
+#projects::before { content: ""; position: absolute; left: 0; top: 0; width: 120px; height: 100%; background-image: radial-gradient(rgba(232,255,71,0.08) 1px, transparent 1px); background-size: 28px 28px; pointer-events: none; z-index: 0; }
+#projects > * { position: relative; z-index: 1; }
 .list { margin-top: clamp(36px, 5vw, 64px); border-top: 1px solid var(--line); }
 .row { display: grid; grid-template-columns: 56px minmax(0, 1.3fr) minmax(0, 1fr) 84px; column-gap: 24px; align-items: start; padding: 30px 16px 30px 0; border-bottom: 1px solid var(--line); transition: background 200ms ease; position: relative; }
 .row:hover { background: rgba(232,255,71,0.03); }
@@ -131,6 +134,8 @@ td { font-size: 15px; color: var(--text); padding-right: 12px; }
 .status a { color: var(--accent); }
 
 /* CONTACT */
+#contact { position: relative; }
+#orbit { position: absolute; top: 60px; right: 6vw; width: 200px; height: 200px; pointer-events: none; }
 .contact { display: grid; grid-template-columns: 6fr 4fr; column-gap: 8vw; }
 .contact h2 { font-weight: 800; font-size: 56px; line-height: 1; letter-spacing: -0.02em; }
 .contact .lead { margin-top: 24px; font-size: 15px; color: var(--muted); max-width: 44ch; }
@@ -159,13 +164,8 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
   .vert { display: none; }
   .about { display: block; }
   .about .label { writing-mode: horizontal-tb; margin-bottom: 20px; }
-  .stats { padding-left: 0; margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
-  .stat:nth-child(n) { margin-left: 0; }
-  .stat:nth-child(2) { margin-top: 36px; }
-  .stat:nth-child(3) { margin-top: 12px; }
-  .stat:nth-child(4) { margin-top: 48px; }
-  .stat b { font-size: 40px; }
-  th { width: 34%; padding-right: 10px; }
+  .side { padding-left: 0; margin-top: 48px; }
+    th { width: 34%; padding-right: 10px; }
   td { font-size: 14px; }
   .cols { display: block; }
   .col { padding-right: 0; }
@@ -175,6 +175,7 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
   .row .go { grid-column: 2; text-align: left; opacity: 1; padding-top: 0; }
   .list.small .row { grid-template-columns: 36px 1fr; }
   .list.small .go { grid-column: 2; }
+  #orbit { display: none; }
   .contact { display: block; }
   .contact h2 { font-size: 44px; }
   form { margin-top: 56px; }
@@ -189,7 +190,6 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
 </style>
 </head>
 <body>
-<canvas id="bg" aria-hidden="true"></canvas>
 
 <nav id="nav">
   <span class="who">Dhritiraj Lahakar</span>
@@ -203,9 +203,10 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
 </nav>
 
 <header id="hero">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
   <div class="meta">Bengaluru, India<br>Available for roles<br>B.Tech CSE AI/ML — 2027</div>
   <div class="vert" aria-hidden="true">dhritiraj-08 · github · 2026</div>
-  <h1><span>Full Stack +</span><span>Agentic AI</span><span>Engineer.</span></h1>
+  <h1><span>Dhritiraj Lahakar</span><span>AI/ML Engineer</span></h1>
   <p class="lede">Building systems that think — 8,000+ users, 6 agents, production.</p>
   <a class="cta" href="#projects">See the work ↓</a>
 </header>
@@ -218,11 +219,8 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
       <p>At TapNex I worked on J-TAP, a SaaS platform for 8,000+ concurrent users, and on LIMP, an enterprise land management system. Both shipped with real role-based access, CI/CD and production data.</p>
       <p>What I care about most is agentic AI: multi-agent orchestration, RAG and tool-using LLMs that finish real tasks. Alongside that, I lead operations at Cognito Club, running campus tech events.</p>
     </div>
-    <div class="stats">
-      <div class="stat"><b>8,000+</b><span>concurrent users</span></div>
-      <div class="stat"><b>6</b><span>AI agents built</span></div>
-      <div class="stat"><b>8.40</b><span>CGPA — Jain University</span></div>
-      <div class="stat"><b>2</b><span>production internships</span></div>
+    <div class="side">
+      <canvas id="nn" aria-hidden="true"></canvas>
     </div>
   </div>
   <div class="hair about-end"></div>
@@ -231,6 +229,7 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
 <section id="skills" class="reveal">
   <h2 class="big">What I build with.</h2>
   <p class="sub">— and how I think about putting it together</p>
+  <canvas id="trace" aria-hidden="true"></canvas>
   <table>
     <tr><th scope="row">Languages</th><td>Python, TypeScript, JavaScript, SQL, Java</td></tr>
     <tr><th scope="row">Frontend</th><td>Next.js, React, Tailwind CSS, shadcn/ui, Zustand, Framer Motion</td></tr>
@@ -273,6 +272,7 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
 </section>
 
 <section id="contact" class="reveal">
+  <canvas id="orbit" width="200" height="200" aria-hidden="true"></canvas>
   <div class="contact">
     <div>
       <h2>Let's build<br>something<br>real.</h2>
@@ -336,31 +336,6 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
     });
   }
 
-  // about stats count up
-  const stats = [...document.querySelectorAll('.stat b')];
-  const cfg = [
-    { to: 8000, fmt: v => Math.round(v).toLocaleString('en-US') + '+' },
-    { to: 6, fmt: v => String(Math.round(v)) },
-    { to: 8.4, fmt: v => v.toFixed(2) },
-    { to: 2, fmt: v => String(Math.round(v)) }
-  ];
-  if (!reduced) {
-    stats.forEach((b, i) => { b.textContent = cfg[i].fmt(0); });
-    const sio = new IntersectionObserver(es => {
-      if (!es[0].isIntersecting) return;
-      sio.disconnect();
-      stats.forEach((b, i) => setTimeout(() => {
-        const t0 = performance.now();
-        (function step(t) {
-          const k = Math.min(1, (t - t0) / 1200), e = 1 - Math.pow(1 - k, 3);
-          b.textContent = cfg[i].fmt(cfg[i].to * e);
-          if (k < 1) requestAnimationFrame(step);
-        })(t0);
-      }, i * 150));
-    }, { threshold: 0.2 });
-    sio.observe(document.getElementById('about'));
-  }
-
   // title glitch
   const lines = [...document.querySelectorAll('h1 span')];
   lines.forEach(l => {
@@ -373,102 +348,133 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
   });
   if (!reduced) (function sched() {
     setTimeout(() => {
-      const l = lines[Math.floor(Math.random() * lines.length)];
-      if (!document.hidden && l.classList.contains('done') && !lines.some(x => x.classList.contains('glitch'))) l.classList.add('glitch');
+      const l = lines[0];
+      if (!document.hidden && l.classList.contains('done') && !l.classList.contains('glitch')) l.classList.add('glitch');
       sched();
     }, 4000 + Math.random() * 4000);
   })();
 
-  // background: static perspective grid + drifting particles (Three.js)
-  (function bg() {
+  // ---------- canvas helpers ----------
+  function fit(cv, w, h) {
+    const d = Math.min(devicePixelRatio || 1, 2);
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d);
+    const c = cv.getContext('2d'); c.setTransform(d, 0, 0, d, 0, 0);
+    return c;
+  }
+  // runs draw(t) every frame while el is on screen; draws a single static frame under reduced motion
+  function animate(el, draw) {
+    if (reduced) { draw(0); return; }
+    let raf = 0;
+    const tick = t => { draw(t); raf = requestAnimationFrame(tick); };
+    new IntersectionObserver(es => {
+      if (es[0].isIntersecting) { if (!raf) raf = requestAnimationFrame(tick); }
+      else { cancelAnimationFrame(raf); raf = 0; }
+    }).observe(el);
+  }
+
+  // ---------- hero: two tilted rings (Three.js, hero-scoped) ----------
+  (function heroRings() {
     if (!window.THREE) return;
+    const cv = document.getElementById('hero-canvas'), hero = document.getElementById('hero');
     let renderer;
-    try { renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg'), alpha: true, antialias: false }); } catch (err) { return; }
-    const dpr = Math.min(devicePixelRatio || 1, 2);
-    renderer.setPixelRatio(dpr);
+    try { renderer = new THREE.WebGLRenderer({ canvas: cv, alpha: true, antialias: true }); } catch (err) { return; }
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
     renderer.setClearColor(0x000000, 0);
-    const scene = new THREE.Scene(), cam = new THREE.OrthographicCamera(0, 1, 1, 0, -1, 1);
-    const hero = document.getElementById('hero');
-    const N = 180, P = [];
-    let W = 0, H = 0, HH = 0, grid = null;
-    const mouse = { x: -9999, y: -9999 };
-
-    const gridMat = new THREE.LineBasicMaterial({ color: 0xE8FF47, transparent: true, opacity: 0.04 });
-    function buildGrid() {
-      if (grid) { scene.remove(grid); grid.geometry.dispose(); }
-      const vx = W * 0.7, vy = HH * 0.45, pts = [];
-      const seg = (x1, y1, x2, y2) => pts.push(x1, H - y1, 0, x2, H - y2, 0);
-      for (let i = 1; i <= 20; i++) { const t = i / 20, y = vy + (HH - vy) * t * t; seg(0, y, W, y); }
-      for (let i = 0; i < 20; i++) seg(vx, vy, -W * 0.6 + (i / 19) * W * 2.2, HH);
-      const g = new THREE.BufferGeometry();
-      g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
-      grid = new THREE.LineSegments(g, gridMat);
-      scene.add(grid);
-      place();
-    }
-    function place() { grid.position.y = scrollY; grid.visible = scrollY < HH; }
-
-    const pos = new Float32Array(N * 3), size = new Float32Array(N), col = new Float32Array(N * 4);
-    const pg = new THREE.BufferGeometry();
-    pg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    pg.setAttribute('aSize', new THREE.BufferAttribute(size, 1));
-    pg.setAttribute('aColor', new THREE.BufferAttribute(col, 4));
-    const pm = new THREE.ShaderMaterial({
-      transparent: true, depthTest: false, depthWrite: false,
-      uniforms: { uDpr: { value: dpr } },
-      vertexShader: `attribute float aSize; attribute vec4 aColor; uniform float uDpr; varying vec4 vColor;
-        void main() { float px = aSize * uDpr; gl_PointSize = max(px, 1.0); vColor = vec4(aColor.rgb, aColor.a * min(1.0, px / gl_PointSize));
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
-      fragmentShader: `varying vec4 vColor; void main() { if (length(gl_PointCoord - 0.5) > 0.5) discard; gl_FragColor = vColor; }`
-    });
-    const points = new THREE.Points(pg, pm);
-    points.frustumCulled = false;
-    scene.add(points);
-
-    function seed() {
-      for (let i = 0; i < N; i++) {
-        const a = Math.random() * 6.2832, s = 0.08 + Math.random() * 0.1, y = Math.random() < 0.4;
-        P.push({ bx: Math.random() * W, by: Math.random() * H, vx: Math.cos(a) * s, vy: Math.sin(a) * s, ox: 0, oy: 0 });
-        size[i] = 0.5 + Math.random();
-        col.set(y ? [232 / 255, 1, 71 / 255, 0.4] : [242 / 255, 242 / 255, 244 / 255, 0.25], i * 4);
-      }
-      pg.attributes.aSize.needsUpdate = true; pg.attributes.aColor.needsUpdate = true;
-    }
-
-    function write() {
-      for (let i = 0; i < N; i++) { const p = P[i]; pos[i * 3] = p.bx + p.ox; pos[i * 3 + 1] = H - (p.by + p.oy); }
-      pg.attributes.position.needsUpdate = true;
-    }
-    function frame() {
-      for (const p of P) {
-        p.bx += p.vx; p.by += p.vy;
-        if (p.bx < 0) p.bx += W; else if (p.bx > W) p.bx -= W;
-        if (p.by < 0) p.by += H; else if (p.by > H) p.by -= H;
-        p.ox *= 0.96; p.oy *= 0.96;
-        const dx = p.bx + p.ox - mouse.x, dy = p.by + p.oy - mouse.y, d = Math.hypot(dx, dy);
-        if (d < 120 && d > 0.01) { p.ox += dx / d * 1.5; p.oy += dy / d * 1.5; }
-      }
-      write(); renderer.render(scene, cam);
-    }
-
+    const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    const tilt = 65 * Math.PI / 180;
+    const a = new THREE.Mesh(new THREE.TorusGeometry(3.5, 0.015, 8, 120), new THREE.MeshBasicMaterial({ color: 0xE8FF47 }));
+    const b = new THREE.Mesh(new THREE.TorusGeometry(4.8, 0.008, 8, 120), new THREE.MeshBasicMaterial({ color: 0xE8FF47, transparent: true, opacity: 0.3 }));
+    [a, b].forEach(m => { m.position.x = 5; m.rotation.x = tilt; scene.add(m); });
     function resize() {
-      const ow = W, oh = H;
-      W = document.documentElement.clientWidth; H = innerHeight; HH = hero.offsetHeight;
-      renderer.setSize(W, H, false);
-      cam.right = W; cam.top = H; cam.updateProjectionMatrix();
-      if (!P.length) seed(); else P.forEach(p => { p.bx *= W / ow; p.by *= H / oh; });
-      buildGrid(); write(); renderer.render(scene, cam);
+      const w = Math.max(1, Math.min(hero.clientWidth, document.documentElement.clientWidth)), h = Math.max(1, hero.clientHeight);
+      renderer.setSize(w, h, false);
+      cam.aspect = w / h; cam.position.z = Math.max(12, 9 / cam.aspect); cam.updateProjectionMatrix();
+      renderer.render(scene, cam);
     }
-    resize();
     addEventListener('resize', resize);
-    addEventListener('load', resize);
+    resize();
     if (document.fonts) document.fonts.ready.then(resize);
-    addEventListener('scroll', () => { place(); if (reduced) renderer.render(scene, cam); }, { passive: true });
+    animate(hero, () => { a.rotation.y += 0.004; b.rotation.y -= 0.002; renderer.render(scene, cam); });
+  })();
 
-    if (reduced) return;
-    addEventListener('pointermove', e => { if (e.pointerType === 'mouse') { mouse.x = e.clientX; mouse.y = e.clientY; } }, { passive: true });
-    document.documentElement.addEventListener('mouseleave', () => { mouse.x = mouse.y = -9999; });
-    (function loop() { requestAnimationFrame(loop); if (!document.hidden) frame(); })();
+  // ---------- about: neural net ----------
+  (function neural() {
+    const cv = document.getElementById('nn'), W = 280, H = 160;
+    const ctx = fit(cv, W, H);
+    const xs = [24, W / 2, W - 24], counts = [3, 4, 2], layers = counts.map((n, l) => Array.from({ length: n }, (_, i) => ({ x: xs[l], y: 20 + (H - 40) * (n === 1 ? 0.5 : i / (n - 1)) })));
+    const conns = [];
+    for (let l = 0; l < 2; l++) layers[l].forEach(p => layers[l + 1].forEach(q => conns.push({ p, q, at: -1e9 })));
+    function draw(t) {
+      ctx.clearRect(0, 0, W, H);
+      ctx.lineWidth = 1;
+      for (const c of conns) {
+        const age = t - c.at, k = age < 200 ? 1 : Math.max(0, 1 - (age - 200) / 300);
+        ctx.strokeStyle = `rgba(232,255,71,${(0.12 + 0.58 * k).toFixed(3)})`;
+        ctx.beginPath(); ctx.moveTo(c.p.x, c.p.y); ctx.lineTo(c.q.x, c.q.y); ctx.stroke();
+      }
+      ctx.fillStyle = 'rgba(232,255,71,0.7)';
+      layers.flat().forEach(n => { ctx.beginPath(); ctx.arc(n.x, n.y, 5, 0, 6.2832); ctx.fill(); });
+    }
+    if (!reduced) setInterval(() => { if (!document.hidden) conns[Math.floor(Math.random() * conns.length)].at = performance.now(); }, 800);
+    animate(cv, () => draw(performance.now()));
+  })();
+
+  // ---------- skills: circuit trace ----------
+  (function circuit() {
+    const cv = document.getElementById('trace'), H = 60;
+    let ctx, W = 0, pts = [], total = 0;
+    function build() {
+      W = cv.clientWidth; ctx = fit(cv, W, H);
+      pts = [{ x: 0, y: 20 }]; let x = 0, y = 20, i = 0;
+      const runs = [70, 40, 110, 50, 90, 60];
+      while (x < W) {
+        x = Math.min(W, x + runs[i % runs.length]); pts.push({ x, y });
+        if (x >= W) break;
+        y = y === 20 ? 40 : 20; pts.push({ x, y }); i++;
+      }
+      pts.forEach((p, k) => { p.d = k ? pts[k - 1].d + Math.hypot(p.x - pts[k - 1].x, p.y - pts[k - 1].y) : 0; });
+      total = pts[pts.length - 1].d;
+    }
+    function at(d) {
+      d = Math.max(0, Math.min(total, d));
+      let k = 1; while (k < pts.length - 1 && pts[k].d < d) k++;
+      const a = pts[k - 1], b = pts[k], f = b.d === a.d ? 0 : (d - a.d) / (b.d - a.d);
+      return { x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f };
+    }
+    function draw(t) {
+      ctx.clearRect(0, 0, W, H);
+      ctx.lineWidth = 1; ctx.lineJoin = 'miter';
+      ctx.strokeStyle = 'rgba(232,255,71,0.15)';
+      ctx.beginPath(); pts.forEach((p, k) => k ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y)); ctx.stroke();
+      const head = reduced ? total : ((t % 3000) / 3000) * total, trail = total / 3, steps = 40;
+      for (let s = 0; s < steps; s++) {
+        const d0 = head - trail * (1 - s / steps), d1 = head - trail * (1 - (s + 1) / steps);
+        if (d1 <= 0) continue;
+        const p = at(d0), q = at(d1);
+        ctx.strokeStyle = `rgba(232,255,71,${(0.4 * (s + 1) / steps).toFixed(3)})`;
+        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+      }
+      const h = at(head);
+      ctx.fillStyle = '#E8FF47'; ctx.beginPath(); ctx.arc(h.x, h.y, 3, 0, 6.2832); ctx.fill();
+    }
+    build();
+    addEventListener('resize', () => { build(); if (reduced) draw(0); });
+    animate(cv, draw);
+  })();
+
+  // ---------- contact: orbiting dots ----------
+  (function orbit() {
+    const cv = document.getElementById('orbit'), S = 200, c = S / 2;
+    const ctx = fit(cv, S, S);
+    function draw(t) {
+      const s = t / 1000;
+      ctx.clearRect(0, 0, S, S); ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(232,255,71,0.08)'; ctx.beginPath(); ctx.arc(c, c, 70, 0, 6.2832); ctx.stroke();
+      ctx.strokeStyle = 'rgba(232,255,71,0.05)'; ctx.beginPath(); ctx.arc(c, c, 50, 0, 6.2832); ctx.stroke();
+      ctx.fillStyle = '#E8FF47'; ctx.beginPath(); ctx.arc(c + 70 * Math.cos(s * 0.4), c + 70 * Math.sin(s * 0.4), 4, 0, 6.2832); ctx.fill();
+      ctx.fillStyle = 'rgba(232,255,71,0.4)'; ctx.beginPath(); ctx.arc(c + 50 * Math.cos(-s * 0.7), c + 50 * Math.sin(-s * 0.7), 2.5, 0, 6.2832); ctx.fill();
+    }
+    animate(cv, draw);
   })();
 
 
@@ -496,12 +502,12 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
     .then(all => {
       const rows = feat.querySelectorAll('.row');
       projects.forEach((p, i) => { const hit = all.find(r => p[4].test(r.name)); if (hit) rows[i].href = hit.html_url; });
-      const rest = all.filter(r => !r.fork && !projects.some(p => p[4].test(r.name)));
+      const rest = all.filter(r => !r.fork && !projects.some(p => p[4].test(r.name)) && r.description && r.description.trim());
       if (!rest.length) { repos.innerHTML = '<div class="status">Everything else lives on <a href="https://github.com/dhritiraj-08" target="_blank" rel="noopener">github.com/dhritiraj-08 ↗</a></div>'; return; }
       repos.innerHTML = rest.map((r, i) => `
         <a class="row" href="${esc(r.html_url)}" target="_blank" rel="noopener">
           <span class="n">${num(i)}</span>
-          <div><div class="name">${esc(r.name)}</div><div class="desc">${esc(r.description || 'No description.')}</div></div>
+          <div><div class="name">${esc(r.name)}</div><div class="desc">${esc(r.description)}</div></div>
           <span class="go">GitHub ↗</span>
         </a>`).join('');
       watchNums(repos);
