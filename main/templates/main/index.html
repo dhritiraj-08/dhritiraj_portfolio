@@ -78,12 +78,18 @@ h2.big { font-weight: 700; font-size: clamp(32px, 5vw, 48px); line-height: 1.1; 
 #about::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse 600px 400px at 95% 10%, rgba(232,255,71,0.03) 0%, transparent 70%); }
 #about > * { position: relative; z-index: 1; }
 .about .label { grid-row: 1; grid-column: 1 / 3; writing-mode: vertical-rl; font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--muted); }
-.about .photo { grid-row: 1; grid-column: 3 / 8; display: block; width: 160px; height: 160px; object-fit: cover; object-position: center top; border-radius: 4px; border: 1px solid rgba(232,255,71,0.3); margin-bottom: 16px; transition: border-color 300ms ease, box-shadow 300ms ease; font-family: var(--mono); font-size: 11px; color: var(--muted); }
-.about .photo:hover { border-color: #E8FF47; box-shadow: 0 0 24px rgba(232,255,71,0.15); }
-.about .bio { grid-row: 2; grid-column: 3 / 8; font-size: 17px; line-height: 1.75; max-width: 65ch; }
+.about .lead-row { grid-row: 1; grid-column: 3 / 9; display: flex; align-items: flex-start; gap: 20px; }
+.ph { flex: none; width: 220px; }
+.frame { position: relative; width: 220px; height: 260px; overflow: hidden; border: 1px solid rgba(232,255,71,0.2); transition: border-color 200ms ease; }
+.frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: grayscale(20%) contrast(1.05); transition: filter 200ms ease; }
+.frame::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(6,6,8,0.6) 100%); pointer-events: none; }
+.frame:hover { border-color: rgba(232,255,71,0.5); }
+.frame:hover img { filter: grayscale(0%); }
+.cap { margin-top: 12px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--muted); }
+.about .bio { flex: 1 1 0; min-width: 0; max-width: 420px; font-size: 15px; line-height: 1.75; color: var(--text); }
 .about .bio p + p { margin-top: 1.3em; }
-.side { grid-row: 1 / span 2; grid-column: 8 / 13; padding-left: 4vw; }
-#cube { display: block; width: 320px; max-width: 100%; height: auto; aspect-ratio: 320 / 280; margin: 0 0 0 auto; }
+.side { grid-row: 1; grid-column: 9 / 13; padding-left: 2vw; }
+#cube { display: block; width: 320px; max-width: 100%; height: auto; aspect-ratio: 1 / 1; margin: 0 0 0 auto; }
 .about-end { margin-top: clamp(60px, 8vw, 110px); }
 
 /* SKILLS */
@@ -121,6 +127,26 @@ td { font-size: 15px; color: var(--text); padding-right: 12px; }
 .col p + p { margin-top: 1.2em; }
 .col p b { font-weight: 500; color: var(--text); }
 
+/* RESUME */
+#resume { border-top: 1px solid rgba(255,255,255,0.06); padding-bottom: clamp(60px, 8vw, 110px); }
+.resume { display: grid; grid-template-columns: 6fr 4fr; column-gap: 8vw; align-items: start; }
+.resume .sub { margin-top: 12px; font-size: 15px; color: var(--muted); }
+.rlinks { margin-top: 40px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; font-family: var(--mono); font-size: 13px; }
+.rlinks .dl { color: var(--accent); letter-spacing: 0; transition: letter-spacing 200ms ease; }
+.rlinks .dl:hover { letter-spacing: 0.06em; }
+.rlinks .vw { color: var(--muted); transition: color 150ms; }
+.rlinks .vw:hover { color: var(--text); }
+.doc { position: relative; overflow: hidden; width: 220px; height: 300px; background: var(--surface); border: 1px solid rgba(232,255,71,0.15); transition: border-color 200ms ease, box-shadow 200ms ease; }
+.doc:hover { border-color: rgba(232,255,71,0.4); box-shadow: 0 0 30px rgba(232,255,71,0.06); }
+.doc i { display: block; height: 8px; border-radius: 2px; background: rgba(255,255,255,0.06); margin: 14px 20px; }
+.doc i:nth-child(1) { width: 60%; background: rgba(232,255,71,0.2); }
+.doc i:nth-child(2) { width: 35%; margin-top: 4px; }
+.doc i:nth-child(3) { width: 90%; } .doc i:nth-child(4) { width: 75%; } .doc i:nth-child(5) { width: 90%; }
+.doc i:nth-child(6) { width: 60%; } .doc i:nth-child(7) { width: 80%; } .doc i:nth-child(8) { width: 70%; }
+.doc::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: rgba(232,255,71,0.15); pointer-events: none; animation: docscan 3s linear infinite; }
+@keyframes docscan { from { top: 0; } to { top: 100%; } }
+.doc-cap { margin-top: 12px; font-family: var(--mono); font-size: 10px; color: var(--muted); }
+
 /* PROJECTS */
 #projects { position: relative; }
 #projects::before { content: ""; position: absolute; left: 0; top: 0; width: 120px; height: 100%; background-image: radial-gradient(rgba(232,255,71,0.08) 1px, transparent 1px); background-size: 28px 28px; pointer-events: none; z-index: 0; }
@@ -131,10 +157,10 @@ td { font-size: 15px; color: var(--text); padding-right: 12px; }
 .row .n { font-family: var(--head); font-weight: 800; font-size: 11px; color: var(--muted); padding-top: 9px; padding-left: 4px; }
 .row .name { transition: text-shadow 200ms ease; font-family: var(--head); font-weight: 700; font-size: 22px; line-height: 1.2; }
 .row:hover .name { text-shadow: 0 0 20px rgba(232,255,71,0.3); }
-.row .desc { margin-top: 6px; font-size: 14px; color: var(--muted); }
+.row .desc { margin-top: 6px; font-size: 14px; color: #6B6B78 !important; }
 .row .tech { font-family: var(--mono); font-size: 11px; line-height: 1.7; color: var(--muted); text-align: right; padding-top: 6px; }
 .row .go { font-family: var(--mono); font-size: 12px; color: var(--accent); text-align: right; padding-top: 6px; opacity: 0; transition: opacity 200ms ease; white-space: nowrap; }
-.row:hover .go, .row:focus-visible .go { opacity: 1; }
+.row:hover .go, .row .go:focus-visible { opacity: 1; }
 .more { margin-top: clamp(56px, 7vw, 96px); font-weight: 700; font-size: 18px; }
 .more + .list { margin-top: 20px; }
 .list.small .row { grid-template-columns: 56px minmax(0, 1fr) 84px; padding: 16px 16px 16px 0; }
@@ -175,7 +201,9 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
   .vert { display: none; }
   .about { display: block; }
   .about .label { writing-mode: horizontal-tb; margin-bottom: 20px; }
-  .about .photo { margin-bottom: 24px; }
+  .about .lead-row { display: block; }
+  .ph, .frame { width: 100%; }
+  .about .bio { margin-top: 24px; max-width: none; }
   .side { padding-left: 0; margin-top: 48px; }
     th { width: 34%; padding-right: 10px; }
   td { font-size: 14px; }
@@ -188,6 +216,8 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
   .list.small .row { grid-template-columns: 36px 1fr; }
   .list.small .go { grid-column: 2; }
   #orbit { display: none; }
+  .resume { display: block; }
+  .resume-r { margin-top: 48px; }
   .contact { display: block; }
   .contact h2 { font-size: 44px; }
   form { margin-top: 56px; }
@@ -196,7 +226,7 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
 @media (hover: none) { .row .go { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  h1 span, .rv, tr, th { animation: none; transition: none; opacity: 1; transform: none; }
+  h1 span, .rv, tr, th, .doc::after { animation: none; transition: none; opacity: 1; transform: none; }
   tr:hover { background-size: 0% 1px; }
 }
 </style>
@@ -209,6 +239,7 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#experience">Experience</a></li>
+    <li><a href="#resume">Resume</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -226,14 +257,19 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
 <section id="about" class="reveal">
   <div class="about">
     <div class="label">ABOUT</div>
-    <img class="photo" src="/static/img/profile.jpg" alt="Dhritiraj Lahakar" width="160" height="160" />
-    <div class="bio">
-      <p>I'm a B.Tech CSE (AI &amp; ML) student at Jain University in Bengaluru, graduating in 2027 with a CGPA of 8.40. I build full stack products and the AI systems that sit inside them.</p>
-      <p>At TapNex I worked on J-TAP, a SaaS platform for 8,000+ concurrent users, and on LIMP, an enterprise land management system. Both shipped with real role-based access, CI/CD and production data.</p>
-      <p>What I care about most is agentic AI: multi-agent orchestration, RAG and tool-using LLMs that finish real tasks. Alongside that, I lead operations at Cognito Club, running campus tech events.</p>
+    <div class="lead-row">
+      <div class="ph">
+        <div class="frame"><img src="/static/img/profile.jpg" alt="Dhritiraj Lahakar" width="220" height="260" /></div>
+        <div class="cap">Dhritiraj Lahakar</div>
+      </div>
+      <div class="bio">
+        <p>I'm a B.Tech CSE (AI &amp; ML) student at Jain University in Bengaluru, graduating in 2027 with a CGPA of 8.40. I build full stack products and the AI systems that sit inside them.</p>
+        <p>At TapNex I worked on J-TAP, a SaaS platform for 8,000+ concurrent users, and on LIMP, an enterprise land management system. Both shipped with real role-based access, CI/CD and production data.</p>
+        <p>What I care about most is agentic AI: multi-agent orchestration, RAG and tool-using LLMs that finish real tasks. Alongside that, I lead operations at Cognito Club, running campus tech events.</p>
+      </div>
     </div>
     <div class="side">
-      <canvas id="cube" width="320" height="280" aria-hidden="true"></canvas>
+      <canvas id="cube" width="320" height="320" aria-hidden="true"></canvas>
     </div>
   </div>
   <div class="hair about-end"></div>
@@ -275,6 +311,26 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
         <p>I led cross-functional teams at Jain University's tech club, owning sponsorships, logistics and the running of large-scale campus tech events from planning through to the day itself.</p>
         <div class="callouts"><div>— Events led · 4+</div><div>— Team size · 12+</div></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="resume" class="reveal">
+  <div class="resume">
+    <div class="resume-l">
+      <h2 class="big">Résumé.</h2>
+      <p class="sub">One page. Everything that matters.</p>
+      <!-- Place resume PDF at:
+           C:\Dhritiraj Portfolio Website\staticfiles\resume.pdf
+           and main\static\resume.pdf -->
+      <div class="rlinks">
+        <a class="dl" href="/static/resume.pdf" download>Download PDF ↓</a>
+        <a class="vw" href="/static/resume.pdf" target="_blank" rel="noopener">View in browser ↗</a>
+      </div>
+    </div>
+    <div class="resume-r">
+      <div class="doc" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="doc-cap">Last updated · Sep 2026</div>
     </div>
   </div>
 </section>
@@ -433,37 +489,60 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
     let renderer;
     try { renderer = new THREE.WebGLRenderer({ canvas: cv, alpha: true, antialias: true }); } catch (err) { return; }
     renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
-    renderer.setSize(320, 280, false);
+    renderer.setSize(320, 320, false);
     renderer.setClearColor(0x000000, 0);
-    const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(50, 320 / 280, 0.1, 50);
-    cam.position.z = 5; cam.lookAt(0, 0, 0);
+    const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(50, 1, 0.1, 50);
+    cam.position.z = 7; cam.lookAt(0, 0, 0);
 
-    const cube = new THREE.Mesh(new THREE.BoxGeometry(1.8, 1.8, 1.8), new THREE.MeshBasicMaterial({ color: 0xE8FF47, wireframe: true, transparent: true, opacity: 0.6 }));
-    scene.add(cube);
+    const light = new THREE.PointLight(0xE8FF47, 1.5);
+    light.position.set(3, 3, 3);
+    scene.add(light);
 
-    const orbs = [], og = new THREE.SphereGeometry(0.12, 8, 8), om = new THREE.MeshBasicMaterial({ color: 0xE8FF47 });
-    for (let i = 0; i < 3; i++) { const m = new THREE.Mesh(og, om); scene.add(m); orbs.push({ m, off: i * Math.PI * 2 / 3 }); }
+    // outer cube: lit surface + wireframe overlay, rotating together
+    const outer = new THREE.Group(), g1 = new THREE.BoxGeometry(2.2, 2.2, 2.2);
+    outer.add(new THREE.Mesh(g1, new THREE.MeshPhongMaterial({ color: 0x000000, emissive: 0x1a1a00, wireframe: false })));
+    outer.add(new THREE.Mesh(g1, new THREE.MeshBasicMaterial({ color: 0xE8FF47, wireframe: true, transparent: true, opacity: 0.7 })));
+    scene.add(outer);
 
-    const N = 40, pg = new THREE.SphereGeometry(0.04, 6, 6), pmat = new THREE.MeshBasicMaterial({ color: 0xE8FF47, transparent: true, opacity: 0.4 }), parts = [];
+    // inner cube, counter-rotating
+    const inner = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.2, 1.2), new THREE.MeshBasicMaterial({ color: 0xE8FF47, wireframe: true, transparent: true, opacity: 0.3 }));
+    scene.add(inner);
+
+    // orbiting spheres, each with three fading ghost copies behind it
+    const R = 2.8, orbs = [], og = new THREE.SphereGeometry(0.15, 8, 8), om = new THREE.MeshBasicMaterial({ color: 0xE8FF47 });
+    const ghostMats = [0.8, 0.5, 0.25].map(o => new THREE.MeshBasicMaterial({ color: 0xE8FF47, transparent: true, opacity: o }));
+    for (let i = 0; i < 3; i++) {
+      const m = new THREE.Mesh(og, om); scene.add(m);
+      const ghosts = ghostMats.map(gm => { const gh = new THREE.Mesh(og, gm); scene.add(gh); return gh; });
+      orbs.push({ m, ghosts, off: i * Math.PI * 2 / 3 });
+    }
+
+    // particles
+    const N = 60, B = 4.0, pg = new THREE.SphereGeometry(0.04, 6, 6), pmat = new THREE.MeshBasicMaterial({ color: 0xE8FF47, transparent: true, opacity: 0.4 }), parts = [];
     for (let i = 0; i < N; i++) {
       const m = new THREE.Mesh(pg, pmat);
-      let v; do { v = new THREE.Vector3((Math.random() * 2 - 1) * 3.5, (Math.random() * 2 - 1) * 3.5, (Math.random() * 2 - 1) * 3.5); } while (v.length() > 3.5);
+      let v; do { v = new THREE.Vector3((Math.random() * 2 - 1) * B, (Math.random() * 2 - 1) * B, (Math.random() * 2 - 1) * B); } while (v.length() > B);
       m.position.copy(v); scene.add(m);
       parts.push({ m, v: new THREE.Vector3((Math.random() * 2 - 1) * 0.003, (Math.random() * 2 - 1) * 0.003, (Math.random() * 2 - 1) * 0.003) });
     }
 
     let angle = 0;
+    const put = (mesh, a, sec, off) => mesh.position.set(R * Math.cos(a), R * Math.sin(a), Math.sin(sec * 1.2 + off) * 0.5);
     function place(sec) {
-      orbs.forEach(o => { const a = angle + o.off; o.m.position.set(2.2 * Math.cos(a), 2.2 * Math.sin(a), Math.sin(sec * 1.2 + o.off) * 0.5); });
+      orbs.forEach(o => {
+        put(o.m, angle + o.off, sec, o.off);
+        o.ghosts.forEach((gh, j) => put(gh, angle + o.off - (j + 1) * 0.16, sec, o.off - (j + 1) * 0.2));
+      });
     }
     place(0);
     renderer.render(scene, cam);
     animate(cv, t => {
-      cube.rotation.x += 0.006; cube.rotation.y += 0.009;
+      outer.rotation.x += 0.008; outer.rotation.y += 0.012;
+      inner.rotation.x -= 0.005; inner.rotation.y -= 0.008;
       angle += 0.008; place(t / 1000);
       parts.forEach(p => {
         p.m.position.add(p.v);
-        ['x', 'y', 'z'].forEach(k => { if (p.m.position[k] > 3.5) p.m.position[k] = -3.5; else if (p.m.position[k] < -3.5) p.m.position[k] = 3.5; });
+        ['x', 'y', 'z'].forEach(k => { if (p.m.position[k] > B) p.m.position[k] = -B; else if (p.m.position[k] < -B) p.m.position[k] = B; });
       });
       scene.rotation.y += 0.002;
       renderer.render(scene, cam);
@@ -538,12 +617,12 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
   ];
   const feat = document.getElementById('featured');
   feat.innerHTML = projects.map((p, i) => `
-    <a class="row" href="${p[3]}" target="_blank" rel="noopener">
+    <div class="row">
       <span class="n">${num(i)}</span>
       <div><div class="name">${esc(p[0])}</div><div class="desc">${esc(p[1])}</div></div>
       <div class="tech">${esc(p[2])}</div>
-      <span class="go">GitHub ↗</span>
-    </a>`).join('');
+      <a class="go" href="${p[3]}" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>`).join('');
 
   watchNums(feat);
 
@@ -552,15 +631,16 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
     .then(r => { if (!r.ok) throw 0; return r.json(); })
     .then(all => {
       const rows = feat.querySelectorAll('.row');
-      projects.forEach((p, i) => { const hit = all.find(r => p[4].test(r.name)); if (hit) rows[i].href = hit.html_url; });
-      const rest = all.filter(r => !r.fork && !projects.some(p => p[4].test(r.name)) && r.description && r.description.trim());
+      projects.forEach((p, i) => { const hit = all.find(r => p[4].test(r.name)); if (hit) rows[i].querySelector('.go').href = hit.html_url; });
+      const skip = ['dhritiraj_portfolio', 'dhritiraj-08', 'tushar_portfolio', 'practical-ml-coursera-prediction-assignment', 'amar-adda'];
+      const rest = all.filter(r => !r.fork && !projects.some(p => p[4].test(r.name)) && !skip.includes(r.name.toLowerCase()) && r.description && r.description.trim());
       if (!rest.length) { repos.innerHTML = '<div class="status">Everything else lives on <a href="https://github.com/dhritiraj-08" target="_blank" rel="noopener">github.com/dhritiraj-08 ↗</a></div>'; return; }
       repos.innerHTML = rest.map((r, i) => `
-        <a class="row" href="${esc(r.html_url)}" target="_blank" rel="noopener">
+        <div class="row">
           <span class="n">${num(i)}</span>
           <div><div class="name">${esc(r.name)}</div><div class="desc">${esc(r.description)}</div></div>
-          <span class="go">GitHub ↗</span>
-        </a>`).join('');
+          <a class="go" href="${esc(r.html_url)}" target="_blank" rel="noopener">GitHub ↗</a>
+        </div>`).join('');
       watchNums(repos);
     })
     .catch(() => { repos.innerHTML = '<div class="status">Couldn\'t load repositories. See <a href="https://github.com/dhritiraj-08" target="_blank" rel="noopener">github.com/dhritiraj-08 ↗</a></div>'; });
