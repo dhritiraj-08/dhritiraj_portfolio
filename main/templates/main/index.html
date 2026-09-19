@@ -1,332 +1,520 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dhritiraj Lahakar | AIML Portfolio</title>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#060608" />
+<title>Dhritiraj Lahakar — Full Stack + Agentic AI Engineer</title>
+<meta name="description" content="Dhritiraj Lahakar is a full stack and agentic AI engineer in Bengaluru, India." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Sans:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg: #060608;
+  --surface: #0E0E12;
+  --line: rgba(255,255,255,0.07);
+  --text: #F2F2F4;
+  --muted: #6B6B78;
+  --accent: #E8FF47;
+  --head: "Syne", sans-serif;
+  --mono: "DM Mono", ui-monospace, monospace;
+  --body: "DM Sans", system-ui, sans-serif;
+  --pad: 6vw;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { background: var(--bg); color: var(--text); font-family: var(--body); font-weight: 400; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+h1, h2, h3 { font-family: var(--head); }
+::selection { background: var(--accent); color: #060608; }
+:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
+
+/* BACKGROUND CANVAS */
+#bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block; }
+header, section, footer { position: relative; z-index: 1; }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; padding: 22px var(--pad); font-family: var(--mono); border-bottom: 1px solid transparent; }
+nav.scrolled { border-bottom-color: rgba(255,255,255,0.06); }
+nav .who { font-size: 13px; letter-spacing: 0.08em; color: var(--muted); }
+nav ul { display: flex; gap: 28px; }
+nav ul a { font-size: 12px; color: var(--muted); transition: color 150ms; }
+nav ul a:hover { color: var(--text); }
+
+/* HERO */
+#hero { position: relative; min-height: 100vh; min-height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 var(--pad) 6vh; }
+#hero::before { content: ""; position: absolute; width: 800px; height: 800px; border-radius: 50%; border: 1px solid rgba(232,255,71,0.06); top: -260px; right: -220px; pointer-events: none; }
+.meta { position: absolute; top: 88px; left: var(--pad); font-family: var(--mono); font-size: 11px; line-height: 1.8; color: var(--muted); }
+.vert { position: absolute; right: var(--pad); bottom: 6vh; writing-mode: vertical-rl; font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; color: var(--muted); }
+h1 { font-weight: 800; font-size: clamp(60px, 10vw, 140px); line-height: 0.95; letter-spacing: -0.02em; }
+h1 span { position: relative; display: block; opacity: 0; transform: translateY(12px); animation: in 600ms ease forwards; }
+h1 span:nth-child(2) { color: var(--accent); animation-delay: 120ms; }
+h1 span:nth-child(3) { animation-delay: 240ms; }
+@keyframes in { to { opacity: 1; transform: none; } }
+h1 span::after { content: attr(data-text); position: absolute; left: 0; top: 0; color: var(--accent); opacity: 0; transform: translateX(-3px); pointer-events: none; }
+h1 span.done { animation: none; opacity: 1; transform: none; }
+h1 span.done.glitch { animation: glitchShift 180ms linear; }
+h1 span.done.glitch::after { animation: glitchGhost 180ms linear; }
+@keyframes glitchShift { 0%, 99% { transform: translateX(3px); } 100% { transform: none; } }
+@keyframes glitchGhost { 0%, 33% { opacity: 0.1; } 34%, 100% { opacity: 0; } }
+.lede { margin-top: 20px; font-size: 16px; color: var(--muted); max-width: 46ch; }
+.cta { display: inline-block; margin-top: 32px; font-family: var(--mono); font-size: 13px; letter-spacing: 0; color: var(--accent); transition: letter-spacing 200ms ease; align-self: flex-start; }
+.cta:hover { letter-spacing: 0.05em; }
+
+/* SECTION BASICS */
+section:not(#hero) { padding: clamp(80px, 12vw, 160px) var(--pad) 0; }
+.rv { opacity: 0; transform: translateY(20px); transition: opacity 500ms ease var(--d, 120ms), transform 500ms ease var(--d, 120ms); }
+.reveal.in .rv { opacity: 1; transform: none; }
+.reveal h2.rv { --d: 0ms; }
+#about { --d: 0ms; }
+h2.big { font-weight: 700; font-size: clamp(32px, 5vw, 48px); line-height: 1.1; letter-spacing: -0.01em; }
+.hair { border-top: 1px solid var(--line); }
+
+/* ABOUT */
+#about { padding-bottom: clamp(60px, 8vw, 110px); }
+.about { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; }
+.about .label { grid-column: 1 / 3; writing-mode: vertical-rl; font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--muted); }
+.about .bio { grid-column: 3 / 8; font-size: 17px; line-height: 1.75; max-width: 65ch; }
+.about .bio p + p { margin-top: 1.3em; }
+.stats { grid-column: 8 / 13; display: flex; flex-direction: column; align-items: flex-start; padding-left: 4vw; }
+.stat b { display: block; font-family: var(--head); font-weight: 700; font-size: 52px; line-height: 1; color: var(--accent); }
+.stat span { display: block; margin-top: 8px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.stat:nth-child(2) { margin-top: 60px; margin-left: 10vw; }
+.stat:nth-child(3) { margin-top: 40px; margin-left: 2vw; }
+.stat:nth-child(4) { margin-top: 80px; margin-left: 8vw; }
+.about-end { margin-top: clamp(60px, 8vw, 110px); }
+
+/* SKILLS */
+#skills .sub { margin-top: 14px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+table { width: 100%; border-collapse: collapse; margin-top: clamp(36px, 5vw, 64px); }
+tr { border-bottom: 1px solid rgba(255,255,255,0.06); transition: background-color 200ms ease, background-size 400ms ease; background-image: linear-gradient(rgba(232,255,71,0.5), rgba(232,255,71,0.5)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1px; }
+tr:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+tr:hover { background-color: rgba(232,255,71,0.03); background-size: 100% 1px; }
+tr:hover th { color: var(--accent); }
+th, td { text-align: left; vertical-align: top; padding: 20px 0; font-weight: 400; }
+th { transition: color 200ms ease; width: 24%; font-family: var(--mono); font-size: 11px; color: var(--muted); padding-top: 24px; }
+td { font-size: 15px; color: var(--text); padding-right: 12px; }
+
+/* EXPERIENCE */
+.cols { display: grid; grid-template-columns: 1fr 1fr; margin-top: clamp(36px, 5vw, 64px); }
+.col { padding-right: clamp(24px, 4vw, 64px); }
+.col + .col { padding-right: 0; padding-left: clamp(24px, 4vw, 64px); border-left: 1px solid var(--line); }
+.col h3 { font-weight: 700; font-size: 28px; line-height: 1.15; }
+.col .role { margin-top: 10px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.col .when { margin-top: 4px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.col .prose { margin-top: 32px; }
+.col p { font-size: 15px; line-height: 1.75; color: #C9C9D0; }
+.col p + p { margin-top: 1.2em; }
+.col p b { font-weight: 500; color: var(--text); }
+
+/* PROJECTS */
+.list { margin-top: clamp(36px, 5vw, 64px); border-top: 1px solid var(--line); }
+.row { display: grid; grid-template-columns: 56px minmax(0, 1.3fr) minmax(0, 1fr) 84px; column-gap: 24px; align-items: start; padding: 30px 16px 30px 0; border-bottom: 1px solid var(--line); transition: background 200ms ease; position: relative; }
+.row:hover { background: rgba(232,255,71,0.03); }
+.row .n { font-family: var(--head); font-weight: 800; font-size: 11px; color: var(--muted); padding-top: 9px; padding-left: 4px; }
+.row .name { transition: text-shadow 200ms ease; font-family: var(--head); font-weight: 700; font-size: 22px; line-height: 1.2; }
+.row:hover .name { text-shadow: 0 0 20px rgba(232,255,71,0.3); }
+.row .desc { margin-top: 6px; font-size: 14px; color: var(--muted); }
+.row .tech { font-family: var(--mono); font-size: 11px; line-height: 1.7; color: var(--muted); text-align: right; padding-top: 6px; }
+.row .go { font-family: var(--mono); font-size: 12px; color: var(--accent); text-align: right; padding-top: 6px; opacity: 0; transition: opacity 200ms ease; white-space: nowrap; }
+.row:hover .go, .row:focus-visible .go { opacity: 1; }
+.more { margin-top: clamp(56px, 7vw, 96px); font-weight: 700; font-size: 18px; }
+.more + .list { margin-top: 20px; }
+.list.small .row { grid-template-columns: 56px minmax(0, 1fr) 84px; padding: 16px 16px 16px 0; }
+.list.small .n { padding-top: 3px; }
+.list.small .name { font-size: 15px; }
+.list.small .desc { font-family: var(--body); font-size: 13px; margin-top: 2px; }
+.list.small .go { padding-top: 2px; }
+.status { padding: 20px 0; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.status a { color: var(--accent); }
+
+/* CONTACT */
+.contact { display: grid; grid-template-columns: 6fr 4fr; column-gap: 8vw; }
+.contact h2 { font-weight: 800; font-size: 56px; line-height: 1; letter-spacing: -0.02em; }
+.contact .lead { margin-top: 24px; font-size: 15px; color: var(--muted); max-width: 44ch; }
+.contact .links { margin-top: 40px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+.contact .links a { font-family: var(--mono); font-size: 13px; background: linear-gradient(#E8FF47, #E8FF47) no-repeat left bottom / 0% 1px; padding-bottom: 2px; transition: color 150ms, background-size 300ms ease; }
+.contact .links a:hover { color: var(--accent); background-size: 100% 1px; }
+form { padding-top: 10px; display: flex; flex-direction: column; gap: 26px; }
+form input, form textarea { width: 100%; background: transparent; border: 0; border-bottom: 1px solid rgba(255,255,255,0.15); border-radius: 0; padding: 8px 0 10px; font: 400 14px var(--body); color: var(--text); resize: none; }
+form input::placeholder, form textarea::placeholder { color: var(--muted); }
+form input:focus, form textarea:focus { outline: none; border-bottom-color: var(--accent); }
+form button { align-self: flex-start; margin-top: 16px; background: none; border: 0; padding: 0; cursor: pointer; font: 400 13px var(--mono); color: var(--accent); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* FOOTER */
+footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line); padding: 20px var(--pad); display: flex; justify-content: space-between; gap: 16px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+/* MOBILE */
+@media (max-width: 767px) {
+  :root { --pad: 22px; }
+  nav { padding: 16px var(--pad); justify-content: flex-end; }
+  nav .who { display: none; }
+  nav ul { gap: 16px; }
+  nav ul a { font-size: 11px; }
+  h1 { font-size: clamp(40px, 9vw, 90px); }
+  .meta { top: 70px; }
+  .vert { display: none; }
+  .about { display: block; }
+  .about .label { writing-mode: horizontal-tb; margin-bottom: 20px; }
+  .stats { padding-left: 0; margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
+  .stat:nth-child(n) { margin-left: 0; }
+  .stat:nth-child(2) { margin-top: 36px; }
+  .stat:nth-child(3) { margin-top: 12px; }
+  .stat:nth-child(4) { margin-top: 48px; }
+  .stat b { font-size: 40px; }
+  th { width: 34%; padding-right: 10px; }
+  td { font-size: 14px; }
+  .cols { display: block; }
+  .col { padding-right: 0; }
+  .col + .col { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); margin-top: 48px; padding-top: 48px; }
+  .row { grid-template-columns: 36px 1fr; padding: 24px 0; row-gap: 10px; }
+  .row .tech { grid-column: 2; text-align: left; padding-top: 0; }
+  .row .go { grid-column: 2; text-align: left; opacity: 1; padding-top: 0; }
+  .list.small .row { grid-template-columns: 36px 1fr; }
+  .list.small .go { grid-column: 2; }
+  .contact { display: block; }
+  .contact h2 { font-size: 44px; }
+  form { margin-top: 56px; }
+  footer { flex-direction: column; }
+}
+@media (hover: none) { .row .go { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  h1 span, .rv, tr, th { animation: none; transition: none; opacity: 1; transform: none; }
+  tr:hover { background-size: 0% 1px; }
+}
+</style>
 </head>
 <body>
+<canvas id="bg" aria-hidden="true"></canvas>
 
-  <!-- SIDE NAV -->
-  <nav class="sidenav">
-    <div class="nav-logo">
-      <div class="nav-logo-box">DL</div>
-      <div class="nav-logo-text">
-        <strong>Dhritiraj Lahakar</strong>
-        <span>AIML · CSE</span>
+<nav id="nav">
+  <span class="who">Dhritiraj Lahakar</span>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header id="hero">
+  <div class="meta">Bengaluru, India<br>Available for roles<br>B.Tech CSE AI/ML — 2027</div>
+  <div class="vert" aria-hidden="true">dhritiraj-08 · github · 2026</div>
+  <h1><span>Full Stack +</span><span>Agentic AI</span><span>Engineer.</span></h1>
+  <p class="lede">Building systems that think — 8,000+ users, 6 agents, production.</p>
+  <a class="cta" href="#projects">See the work ↓</a>
+</header>
+
+<section id="about" class="reveal">
+  <div class="about">
+    <div class="label">ABOUT</div>
+    <div class="bio">
+      <p>I'm a B.Tech CSE (AI &amp; ML) student at Jain University in Bengaluru, graduating in 2027 with a CGPA of 8.40. I build full stack products and the AI systems that sit inside them.</p>
+      <p>At TapNex I worked on J-TAP, a SaaS platform for 8,000+ concurrent users, and on LIMP, an enterprise land management system. Both shipped with real role-based access, CI/CD and production data.</p>
+      <p>What I care about most is agentic AI: multi-agent orchestration, RAG and tool-using LLMs that finish real tasks. Alongside that, I lead operations at Cognito Club, running campus tech events.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>8,000+</b><span>concurrent users</span></div>
+      <div class="stat"><b>6</b><span>AI agents built</span></div>
+      <div class="stat"><b>8.40</b><span>CGPA — Jain University</span></div>
+      <div class="stat"><b>2</b><span>production internships</span></div>
+    </div>
+  </div>
+  <div class="hair about-end"></div>
+</section>
+
+<section id="skills" class="reveal">
+  <h2 class="big">What I build with.</h2>
+  <p class="sub">— and how I think about putting it together</p>
+  <table>
+    <tr><th scope="row">Languages</th><td>Python, TypeScript, JavaScript, SQL, Java</td></tr>
+    <tr><th scope="row">Frontend</th><td>Next.js, React, Tailwind CSS, shadcn/ui, Zustand, Framer Motion</td></tr>
+    <tr><th scope="row">Backend</th><td>Node.js, NestJS, Django REST, Flask, Prisma ORM, JWT, NextAuth</td></tr>
+    <tr><th scope="row">Databases</th><td>PostgreSQL, Supabase, MySQL, SQLite</td></tr>
+    <tr><th scope="row">AI &amp; Agents</th><td>LangChain, LangGraph, CrewAI, RAG, OpenAI, Gemini, OpenRouter, Ollama</td></tr>
+    <tr><th scope="row">Automation</th><td>n8n, Agent Orchestration, Human-in-Loop Pipelines</td></tr>
+    <tr><th scope="row">DevOps</th><td>Docker, Vercel, Render, GitHub Actions, Cloudinary</td></tr>
+  </table>
+</section>
+
+<section id="experience" class="reveal">
+  <h2 class="big">Where I've shipped.</h2>
+  <div class="cols">
+    <div class="col">
+      <h3>TapNex</h3>
+      <div class="role">Full Stack &amp; Operations Intern</div>
+      <div class="when">Jul 2025 – Jan 2026 · Bengaluru</div>
+      <div class="prose">
+        <p><b>J-TAP</b> is a SaaS platform built with Next.js 14, React 18, TypeScript and NestJS, serving 8,000+ concurrent users. I also built an 8-agent Gemini LLM orchestration layer on top of it, covering a Resume Analyser, a Learning Path agent and a natural-language query agent.</p>
+        <p><b>LIMP</b> is an enterprise land management SaaS on Django REST, PostgreSQL and Docker. It has eight user persona dashboards, JWT authentication and a GitHub Actions CI/CD pipeline, all developed in Agile/Scrum sprints.</p>
       </div>
     </div>
-    <div class="nav-divider"></div>
-    <ul class="nav-links">
-      <li><a href="#hero"><div class="nav-icon-box"><i class="fas fa-house"></i></div><span class="nav-label">Home</span></a></li>
-      <li><a href="#about"><div class="nav-icon-box"><i class="fas fa-user"></i></div><span class="nav-label">About</span></a></li>
-      <li><a href="#works"><div class="nav-icon-box"><i class="fas fa-layer-group"></i></div><span class="nav-label">Works</span></a></li>
-      <li><a href="#skills"><div class="nav-icon-box"><i class="fas fa-brain"></i></div><span class="nav-label">Skills</span></a></li>
-      <li><a href="#contact"><div class="nav-icon-box"><i class="fas fa-envelope"></i></div><span class="nav-label">Contact</span></a></li>
-    </ul>
-    <div class="nav-socials">
-      <a href="https://github.com/dhritiraj-08" target="_blank"><div class="nav-icon-box"><i class="fab fa-github"></i></div><span>GitHub</span></a>
-      <a href="https://www.linkedin.com/in/dhritiraj-lahakar-31939528a/" target="_blank"><div class="nav-icon-box"><i class="fab fa-linkedin"></i></div><span>LinkedIn</span></a>
-      <a href="https://leetcode.com/u/dhritiraj-08/" target="_blank"><div class="nav-icon-box"><i class="fas fa-code"></i></div><span>LeetCode</span></a>
-    </div>
-  </nav>
-
-  <!-- HERO SECTION -->
-  <section class="hero" id="hero">
-    <div class="hero-content">
-      <p class="hero-greeting">Hello, World</p>
-      <h1 class="hero-name">I'm <span class="highlight">Dhritiraj Lahakar</span></h1>
-      <h2 class="hero-tagline">
-        <span class="typed-text"></span><span class="cursor">|</span>
-      </h2>
-    </div>
-    <div class="dino-strip">
-      <canvas id="dinoCanvas"></canvas>
-    </div>
-  </section>
-
-  <!-- ABOUT SECTION -->
-  <section class="about" id="about">
-    <div class="section-label">— About Me</div>
-    <div class="about-container">
-      <div class="about-image">
-        <div class="img-wrapper">
-          <img src="{% static 'img/profile.jpg' %}" alt="Dhritiraj Lahakar" />
-        </div>
-        <!-- About Lottie removed -->
-      </div>
-      <div class="about-text">
-        <h2>Who am I?</h2>
-        <p>Hi, I'm <strong>Dhritiraj</strong> — a Computer Science Engineering student specializing in AI &amp; Machine Learning, passionate about building innovative, user-focused digital experiences. I enjoy exploring emerging technologies, agentic AI, and modern web frameworks that create real-world impact.</p>
-        <p>I have worked with the startup <strong>TapNex</strong> as a Frontend &amp; Operations Intern, where I developed production-grade SaaS web applications using Next.js, React, TypeScript, and Tailwind CSS. Alongside this, I've served as an Operations Lead in <strong>Cognito Club</strong>, coordinating large-scale events, leading cross-functional teams, and managing logistics.</p>
-        <p>Beyond engineering, I have a strong interest in <strong>UI/UX design</strong> and love creating clean, engaging, and intuitive user experiences. I'm always curious to learn, experiment, and innovate with next-generation technologies, especially in the fields of AI agents, RAG, and automation.</p>
-        <p>I believe in combining creativity with technology to turn complex ideas into scalable, production-ready solutions.</p>
-        <div class="about-stats">
-          <div class="stat"><span class="stat-num">B.Tech</span><span class="stat-label">CSE (AI &amp; ML)</span></div>
-          <div class="stat"><span class="stat-num">2+</span><span class="stat-label">Years Coding &amp; Dev</span></div>
-          <div class="stat"><span class="stat-num">7+</span><span class="stat-label">Projects Built</span></div>
-          <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Curiosity</span></div>
-        </div>
+    <div class="col">
+      <h3>Cognito Club</h3>
+      <div class="role">Operations Lead</div>
+      <div class="when">Aug 2025 – Apr 2026 · Jain University</div>
+      <div class="prose">
+        <p>I led cross-functional teams at Jain University's tech club, owning sponsorships, logistics and the running of large-scale campus tech events from planning through to the day itself.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- WORKS / SKILLS / RESUME SECTION -->
-  <section class="works" id="works">
-    <div class="section-label">— What I Do</div>
-    <h2 class="section-title">My <span class="highlight">Space</span></h2>
+<section id="projects" class="reveal">
+  <h2 class="big">Selected work.</h2>
+  <div class="list" id="featured"></div>
+  <h3 class="more">More on GitHub</h3>
+  <div class="list small" id="repos"><div class="status">Loading repositories…</div></div>
+</section>
 
-    <div class="cards-grid top-cards">
-      <div class="card card-projects">
-        <div class="card-icon"><i class="fas fa-code"></i></div>
-        <h3>Projects</h3>
-        <p>A collection of real-world web, AI, and software projects I've built.</p>
-        <div class="project-list">
-
-          <div class="project-item">
-            <span class="project-dot"></span>
-            <div>
-              <strong>CareerPilot AI — Agentic Career OS</strong>
-              <p>A multi-agent AI platform with agent orchestration for resume analysis, interview coaching, application tracking, and personalized career recommendations. Built with Next.js, LangGraph, LangChain, RAG, Supabase, and OpenRouter LLMs.</p>
-              <span class="project-tag">Next.js · LangGraph · Supabase · RAG</span>
-            </div>
-          </div>
-
-          <div class="project-item">
-            <span class="project-dot"></span>
-            <div>
-              <strong>Chronova AI — Academic Scheduling Platform</strong>
-              <p>An AI-powered timetable management system for conflict-free institutional scheduling — featuring teacher allocation, subject assignment, Flask REST APIs, and Supabase dashboards.</p>
-              <span class="project-tag">Next.js · Flask · Supabase · PostgreSQL</span>
-            </div>
-          </div>
-
-          <div class="project-item">
-            <span class="project-dot"></span>
-            <div>
-              <strong>J-TAP — Training &amp; Placement SaaS (Client Project)</strong>
-              <p>Institution-scale placement platform supporting 8,000+ concurrent users. Developed QR-based attendance, self-learning hubs, and an 8-agent Gemini LLM orchestration layer for resume analysis and personalized learning paths.</p>
-              <span class="project-tag">Next.js · NestJS · Gemini AI · TypeScript</span>
-            </div>
-          </div>
-
-          <div class="project-item">
-            <span class="project-dot"></span>
-            <div>
-              <strong>LIMP — Land Intelligence Platform (Client Project)</strong>
-              <p>Enterprise land management SaaS featuring role-based access control for 8 user personas, responsive admin dashboards, Django REST Framework APIs, and Docker deployments.</p>
-              <span class="project-tag">Next.js · Django REST · Docker · PostgreSQL</span>
-            </div>
-          </div>
-
-          <div class="project-item">
-            <span class="project-dot"></span>
-            <div>
-              <strong>Attendance Management System</strong>
-              <p>A full-stack role-based student and admin attendance tracking platform built for the Jain University Placement Department, utilizing Supabase Auth and real-time database tracking.</p>
-              <span class="project-tag">Next.js · Supabase · PostgreSQL · Auth</span>
-            </div>
-          </div>
-
-          <div class="project-item">
-            <span class="project-dot"></span>
-            <div>
-              <strong>Cinematographer Portfolio Website</strong>
-              <p>A visually rich React.js portfolio built for a professional cinematographer client, showcasing video reels and visual projects, optimized using Cloudinary and HandBrake.</p>
-              <a href="https://tushar-portfolio-p30g.onrender.com" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> tushar-portfolio-p30g.onrender.com</a>
-              <span class="project-tag">React.js · Cloudinary · Render</span>
-            </div>
-          </div>
-
-          <div class="project-item">
-            <span class="project-dot"></span>
-            <div>
-              <strong>Personal Portfolio — Dhritiraj Lahakar</strong>
-              <p>This very website — a dark-themed developer portfolio built with Django, featuring a dino run animation, skills showcase, projects timeline, and contact form handling.</p>
-              <span class="project-tag">Django · HTML5 · CSS3 · JavaScript</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="card card-resume">
-        <div class="card-icon"><i class="fas fa-file-alt"></i></div>
-        <h3>Resume</h3>
-        <p>Download my latest resume to know more about my experience and education.</p>
-        <div class="resume-highlights">
-          <div class="resume-item"><i class="fas fa-graduation-cap"></i> B.Tech CSE (AI & ML) — 2023–2027</div>
-          <div class="resume-item"><i class="fas fa-briefcase"></i> Frontend & Operations Intern, TapNex — 2025–2026</div>
-          <div class="resume-item"><i class="fas fa-users"></i> Operations Lead, Cognito Club — 2025–2026</div>
-        </div>
-        <a href="{% static 'resume.pdf' %}" class="btn btn-primary" download>
-          <i class="fas fa-download"></i> Download Resume
-        </a>
+<section id="contact" class="reveal">
+  <div class="contact">
+    <div>
+      <h2>Let's build<br>something<br>real.</h2>
+      <p class="lead">I'm looking for full-stack and AI/ML roles. If you're building something interesting, I want to hear about it.</p>
+      <div class="links">
+        <a href="mailto:dhritirajlahkarwork@gmail.com">dhritirajlahkarwork@gmail.com ↗</a>
+        <a href="https://linkedin.com/in/dhritiraj-lahakar" target="_blank" rel="noopener">linkedin.com/in/dhritiraj-lahakar ↗</a>
+        <a href="https://github.com/dhritiraj-08" target="_blank" rel="noopener">github.com/dhritiraj-08 ↗</a>
       </div>
     </div>
+    <form id="form">
+      <label class="sr" for="n">Name</label><input id="n" name="name" type="text" placeholder="Name" required />
+      <label class="sr" for="e">Email</label><input id="e" name="email" type="email" placeholder="Email" required />
+      <label class="sr" for="m">Message</label><textarea id="m" name="message" rows="4" placeholder="Message" required></textarea>
+      <button type="submit">Send it →</button>
+    </form>
+  </div>
+</section>
 
-    <!-- SKILLS FULL WIDTH -->
-    <div class="card card-skills skills-full" id="skills">
-      <h3 class="skills-title">Skills</h3>
-      <div class="skills-underline"></div>
-      <div class="skill-categories">
+<footer><span>Dhritiraj Lahakar · 2026</span><span>Built with intent.</span></footer>
 
-        <!-- AI & LLMs -->
-        <div class="skill-cat-card">
-          <div class="skill-cat-header"><i class="fas fa-brain"></i><span>AI &amp; LLMs</span></div>
-          <div class="skill-box-grid">
-            <div class="skill-box">LangChain</div>
-            <div class="skill-box">LangGraph</div>
-            <div class="skill-box">CrewAI</div>
-            <div class="skill-box">RAG</div>
-            <div class="skill-box">Prompt Eng.</div>
-            <div class="skill-box">OpenAI API</div>
-            <div class="skill-box">Gemini API</div>
-            <div class="skill-box">OpenRouter</div>
-          </div>
-        </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(() => {
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const num = i => String(i + 1).padStart(2, '0');
 
-        <!-- Languages -->
-        <div class="skill-cat-card">
-          <div class="skill-cat-header"><i class="fas fa-code"></i><span>Languages</span></div>
-          <div class="skill-box-grid">
-            <div class="skill-box">Python</div>
-            <div class="skill-box">Java</div>
-            <div class="skill-box">JavaScript</div>
-            <div class="skill-box">TypeScript</div>
-            <div class="skill-box">SQL</div>
-            <div class="skill-box">HTML5</div>
-            <div class="skill-box">CSS3</div>
-            <div class="skill-box">JSON / MD</div>
-          </div>
-        </div>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', scrollY > 100);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
-        <!-- Frontend -->
-        <div class="skill-cat-card">
-          <div class="skill-cat-header"><i class="fas fa-desktop"></i><span>Frontend</span></div>
-          <div class="skill-box-grid">
-            <div class="skill-box">React.js</div>
-            <div class="skill-box">Next.js</div>
-            <div class="skill-box">Tailwind CSS</div>
-            <div class="skill-box">shadcn/ui</div>
-            <div class="skill-box">TypeScript</div>
-            <div class="skill-box">Responsive Design</div>
-          </div>
-        </div>
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.08 });
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        <!-- Backend & Databases -->
-        <div class="skill-cat-card">
-          <div class="skill-cat-header"><i class="fas fa-server"></i><span>Backend &amp; DB</span></div>
-          <div class="skill-box-grid">
-            <div class="skill-box">Node.js</div>
-            <div class="skill-box">NestJS</div>
-            <div class="skill-box">Flask</div>
-            <div class="skill-box">Django REST</div>
-            <div class="skill-box">PostgreSQL</div>
-            <div class="skill-box">Supabase</div>
-            <div class="skill-box">MySQL</div>
-            <div class="skill-box">SQLite</div>
-          </div>
-        </div>
+  // stagger: heading first, content 120ms later
+  document.querySelectorAll('.reveal').forEach(sec => {
+    const kids = sec.id === 'contact' ? sec.querySelectorAll('h2, .lead, .links, form') : sec.children;
+    [...kids].forEach(k => k.classList.add('rv'));
+    io.observe(sec);
+  });
 
-        <!-- Cloud & DevOps -->
-        <div class="skill-cat-card">
-          <div class="skill-cat-header"><i class="fas fa-cloud"></i><span>Cloud &amp; DevOps</span></div>
-          <div class="skill-box-grid">
-            <div class="skill-box">Docker</div>
-            <div class="skill-box">Vercel</div>
-            <div class="skill-box">Render</div>
-            <div class="skill-box">Cloudinary</div>
-            <div class="skill-box">GitHub Actions</div>
-            <div class="skill-box">Git</div>
-          </div>
-        </div>
-
-        <!-- Automation & Tools -->
-        <div class="skill-cat-card">
-          <div class="skill-cat-header"><i class="fas fa-tools"></i><span>Tools &amp; Automation</span></div>
-          <div class="skill-box-grid">
-            <div class="skill-box">n8n</div>
-            <div class="skill-box">GitHub</div>
-            <div class="skill-box">Postman</div>
-            <div class="skill-box">Figma</div>
-            <div class="skill-box">npm</div>
-            <div class="skill-box">Chrome DevTools</div>
-          </div>
-        </div>
-
-        <!-- Core CS & Professional -->
-        <div class="skill-cat-card" style="grid-column: 1 / -1; max-width: 400px; margin: 0 auto; width: 100%;">
-          <div class="skill-cat-header"><i class="fas fa-book"></i><span>Core CS &amp; Agile</span></div>
-          <div class="skill-box-grid">
-            <div class="skill-box">DSA</div>
-            <div class="skill-box">OOP</div>
-            <div class="skill-box">DBMS</div>
-            <div class="skill-box">OS</div>
-            <div class="skill-box">Networks</div>
-            <div class="skill-box">Agile / Scrum</div>
-            <div class="skill-box">Debugging</div>
-            <div class="skill-box">Problem Solving</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT SECTION -->
-  <section class="contact" id="contact">
-    <div class="section-label">— Let's Connect</div>
-    <h2 class="section-title">Get In <span class="highlight">Touch</span></h2>
-    <p class="contact-sub">Have a project idea, collaboration, or just want to say hi? My inbox is open.</p>
-    <div class="contact-container">
-      <div class="contact-left">
-        <div class="contact-links">
-          <a href="mailto:dhritirajlahkarwork@gmail.com" class="contact-card">
-            <i class="fas fa-envelope"></i><span>dhritirajlahkarwork@gmail.com</span>
-          </a>
-          <a href="https://github.com/dhritiraj-08" target="_blank" class="contact-card">
-            <i class="fab fa-github"></i><span>github.com/dhritiraj-08</span>
-          </a>
-          <a href="https://www.linkedin.com/in/dhritiraj-lahakar-31939528a/" target="_blank" class="contact-card">
-            <i class="fab fa-linkedin"></i><span>Dhritiraj Lahakar</span>
-          </a>
-          <a href="https://leetcode.com/u/dhritiraj-08/" target="_blank" class="contact-card">
-            <i class="fas fa-code"></i><span>leetcode.com/u/dhritiraj-08</span>
-          </a>
-        </div>
-        <!-- Contact Lottie -->
-        <div id="lottie-contact" class="lottie-contact"></div>
-      </div>
-      <form class="contact-form" method="POST" action="{% url 'contact' %}">
-        {% csrf_token %}
-        <input type="text" name="name" placeholder="Your Name" required />
-        <input type="email" name="email" placeholder="Your Email" required />
-        <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-        <button type="submit" class="btn btn-primary">Send Message <i class="fas fa-paper-plane"></i></button>
-      </form>
-    </div>
-    {% if messages %}
-      {% for message in messages %}
-        <p class="form-success">{{ message }}</p>
-      {% endfor %}
-    {% endif %}
-  </section>
-
-  <script src="{% static 'js/script.js' %}"></script>
-  <script src="{% static 'js/dino.js' %}"></script>
-  <script>
-    // Contact — message animation
-    lottie.loadAnimation({
-      container: document.getElementById('lottie-contact'),
-      renderer: 'svg', loop: true, autoplay: true,
-      path: 'https://assets6.lottiefiles.com/packages/lf20_u25cckyh.json'
+  // row numbers count up as each row enters
+  const numIO = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    numIO.unobserve(e.target);
+    const n = e.target.querySelector('.n'), to = +n.dataset.to, t0 = performance.now();
+    (function step(t) {
+      const k = Math.min(1, (t - t0) / 600);
+      n.textContent = num(Math.round(to * k) - 1);
+      if (k < 1) requestAnimationFrame(step);
+    })(t0);
+  }), { threshold: 0.6 });
+  function watchNums(root) {
+    if (reduced) return;
+    root.querySelectorAll('.row .n').forEach(n => {
+      n.dataset.to = parseInt(n.textContent, 10);
+      n.textContent = '00';
+      numIO.observe(n.parentElement);
     });
-  </script>
+  }
+
+  // about stats count up
+  const stats = [...document.querySelectorAll('.stat b')];
+  const cfg = [
+    { to: 8000, fmt: v => Math.round(v).toLocaleString('en-US') + '+' },
+    { to: 6, fmt: v => String(Math.round(v)) },
+    { to: 8.4, fmt: v => v.toFixed(2) },
+    { to: 2, fmt: v => String(Math.round(v)) }
+  ];
+  if (!reduced) {
+    stats.forEach((b, i) => { b.textContent = cfg[i].fmt(0); });
+    const sio = new IntersectionObserver(es => {
+      if (!es[0].isIntersecting) return;
+      sio.disconnect();
+      stats.forEach((b, i) => setTimeout(() => {
+        const t0 = performance.now();
+        (function step(t) {
+          const k = Math.min(1, (t - t0) / 1200), e = 1 - Math.pow(1 - k, 3);
+          b.textContent = cfg[i].fmt(cfg[i].to * e);
+          if (k < 1) requestAnimationFrame(step);
+        })(t0);
+      }, i * 150));
+    }, { threshold: 0.2 });
+    sio.observe(document.getElementById('about'));
+  }
+
+  // title glitch
+  const lines = [...document.querySelectorAll('h1 span')];
+  lines.forEach(l => {
+    l.dataset.text = l.textContent;
+    l.addEventListener('animationend', e => {
+      if (e.target !== l) return;
+      if (e.animationName === 'in') l.classList.add('done');
+      if (e.animationName === 'glitchShift') l.classList.remove('glitch');
+    });
+  });
+  if (!reduced) (function sched() {
+    setTimeout(() => {
+      const l = lines[Math.floor(Math.random() * lines.length)];
+      if (!document.hidden && l.classList.contains('done') && !lines.some(x => x.classList.contains('glitch'))) l.classList.add('glitch');
+      sched();
+    }, 4000 + Math.random() * 4000);
+  })();
+
+  // background: static perspective grid + drifting particles (Three.js)
+  (function bg() {
+    if (!window.THREE) return;
+    let renderer;
+    try { renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg'), alpha: true, antialias: false }); } catch (err) { return; }
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    renderer.setPixelRatio(dpr);
+    renderer.setClearColor(0x000000, 0);
+    const scene = new THREE.Scene(), cam = new THREE.OrthographicCamera(0, 1, 1, 0, -1, 1);
+    const hero = document.getElementById('hero');
+    const N = 180, P = [];
+    let W = 0, H = 0, HH = 0, grid = null;
+    const mouse = { x: -9999, y: -9999 };
+
+    const gridMat = new THREE.LineBasicMaterial({ color: 0xE8FF47, transparent: true, opacity: 0.04 });
+    function buildGrid() {
+      if (grid) { scene.remove(grid); grid.geometry.dispose(); }
+      const vx = W * 0.7, vy = HH * 0.45, pts = [];
+      const seg = (x1, y1, x2, y2) => pts.push(x1, H - y1, 0, x2, H - y2, 0);
+      for (let i = 1; i <= 20; i++) { const t = i / 20, y = vy + (HH - vy) * t * t; seg(0, y, W, y); }
+      for (let i = 0; i < 20; i++) seg(vx, vy, -W * 0.6 + (i / 19) * W * 2.2, HH);
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+      grid = new THREE.LineSegments(g, gridMat);
+      scene.add(grid);
+      place();
+    }
+    function place() { grid.position.y = scrollY; grid.visible = scrollY < HH; }
+
+    const pos = new Float32Array(N * 3), size = new Float32Array(N), col = new Float32Array(N * 4);
+    const pg = new THREE.BufferGeometry();
+    pg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    pg.setAttribute('aSize', new THREE.BufferAttribute(size, 1));
+    pg.setAttribute('aColor', new THREE.BufferAttribute(col, 4));
+    const pm = new THREE.ShaderMaterial({
+      transparent: true, depthTest: false, depthWrite: false,
+      uniforms: { uDpr: { value: dpr } },
+      vertexShader: `attribute float aSize; attribute vec4 aColor; uniform float uDpr; varying vec4 vColor;
+        void main() { float px = aSize * uDpr; gl_PointSize = max(px, 1.0); vColor = vec4(aColor.rgb, aColor.a * min(1.0, px / gl_PointSize));
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+      fragmentShader: `varying vec4 vColor; void main() { if (length(gl_PointCoord - 0.5) > 0.5) discard; gl_FragColor = vColor; }`
+    });
+    const points = new THREE.Points(pg, pm);
+    points.frustumCulled = false;
+    scene.add(points);
+
+    function seed() {
+      for (let i = 0; i < N; i++) {
+        const a = Math.random() * 6.2832, s = 0.08 + Math.random() * 0.1, y = Math.random() < 0.4;
+        P.push({ bx: Math.random() * W, by: Math.random() * H, vx: Math.cos(a) * s, vy: Math.sin(a) * s, ox: 0, oy: 0 });
+        size[i] = 0.5 + Math.random();
+        col.set(y ? [232 / 255, 1, 71 / 255, 0.4] : [242 / 255, 242 / 255, 244 / 255, 0.25], i * 4);
+      }
+      pg.attributes.aSize.needsUpdate = true; pg.attributes.aColor.needsUpdate = true;
+    }
+
+    function write() {
+      for (let i = 0; i < N; i++) { const p = P[i]; pos[i * 3] = p.bx + p.ox; pos[i * 3 + 1] = H - (p.by + p.oy); }
+      pg.attributes.position.needsUpdate = true;
+    }
+    function frame() {
+      for (const p of P) {
+        p.bx += p.vx; p.by += p.vy;
+        if (p.bx < 0) p.bx += W; else if (p.bx > W) p.bx -= W;
+        if (p.by < 0) p.by += H; else if (p.by > H) p.by -= H;
+        p.ox *= 0.96; p.oy *= 0.96;
+        const dx = p.bx + p.ox - mouse.x, dy = p.by + p.oy - mouse.y, d = Math.hypot(dx, dy);
+        if (d < 120 && d > 0.01) { p.ox += dx / d * 1.5; p.oy += dy / d * 1.5; }
+      }
+      write(); renderer.render(scene, cam);
+    }
+
+    function resize() {
+      const ow = W, oh = H;
+      W = document.documentElement.clientWidth; H = innerHeight; HH = hero.offsetHeight;
+      renderer.setSize(W, H, false);
+      cam.right = W; cam.top = H; cam.updateProjectionMatrix();
+      if (!P.length) seed(); else P.forEach(p => { p.bx *= W / ow; p.by *= H / oh; });
+      buildGrid(); write(); renderer.render(scene, cam);
+    }
+    resize();
+    addEventListener('resize', resize);
+    addEventListener('load', resize);
+    if (document.fonts) document.fonts.ready.then(resize);
+    addEventListener('scroll', () => { place(); if (reduced) renderer.render(scene, cam); }, { passive: true });
+
+    if (reduced) return;
+    addEventListener('pointermove', e => { if (e.pointerType === 'mouse') { mouse.x = e.clientX; mouse.y = e.clientY; } }, { passive: true });
+    document.documentElement.addEventListener('mouseleave', () => { mouse.x = mouse.y = -9999; });
+    (function loop() { requestAnimationFrame(loop); if (!document.hidden) frame(); })();
+  })();
+
+
+  const projects = [
+    ['CareerPilot AI', '6-agent agentic career platform with LLM orchestration, RAG and Gmail API', 'Next.js 14, LangGraph, LangChain, OpenRouter, Supabase', 'https://github.com/dhritiraj-08/CareerPilot-AI', /career.?pilot/i],
+    ['Chronova AI', 'Dual-portal AI scheduling for students and institutions', 'Next.js 16, Zustand, OpenRouter, Supabase, PostgreSQL', 'https://github.com/dhritiraj-08/Chronova-ai', /chronova/i],
+    ['SARTS', 'Real-time federated equipment rental — Caterpillar Hackathon 2025', 'Next.js 14, NextAuth, Supabase, Leaflet, Recharts', 'https://github.com/dhritiraj-08', /sarts/i],
+    ['The Agora Club', 'Gamified community platform with hand-rolled HMAC auth', 'Next.js 16, Prisma 7, PostgreSQL, Resend', 'https://github.com/dhritiraj-08', /agora/i],
+    ['Attendance System', 'Role-based attendance platform for Jain University', 'Next.js, PostgreSQL, Supabase', 'https://github.com/dhritiraj-08', /attendance/i]
+  ];
+  const feat = document.getElementById('featured');
+  feat.innerHTML = projects.map((p, i) => `
+    <a class="row" href="${p[3]}" target="_blank" rel="noopener">
+      <span class="n">${num(i)}</span>
+      <div><div class="name">${esc(p[0])}</div><div class="desc">${esc(p[1])}</div></div>
+      <div class="tech">${esc(p[2])}</div>
+      <span class="go">GitHub ↗</span>
+    </a>`).join('');
+
+  watchNums(feat);
+
+  const repos = document.getElementById('repos');
+  fetch('https://api.github.com/users/dhritiraj-08/repos?sort=updated&per_page=30')
+    .then(r => { if (!r.ok) throw 0; return r.json(); })
+    .then(all => {
+      const rows = feat.querySelectorAll('.row');
+      projects.forEach((p, i) => { const hit = all.find(r => p[4].test(r.name)); if (hit) rows[i].href = hit.html_url; });
+      const rest = all.filter(r => !r.fork && !projects.some(p => p[4].test(r.name)));
+      if (!rest.length) { repos.innerHTML = '<div class="status">Everything else lives on <a href="https://github.com/dhritiraj-08" target="_blank" rel="noopener">github.com/dhritiraj-08 ↗</a></div>'; return; }
+      repos.innerHTML = rest.map((r, i) => `
+        <a class="row" href="${esc(r.html_url)}" target="_blank" rel="noopener">
+          <span class="n">${num(i)}</span>
+          <div><div class="name">${esc(r.name)}</div><div class="desc">${esc(r.description || 'No description.')}</div></div>
+          <span class="go">GitHub ↗</span>
+        </a>`).join('');
+      watchNums(repos);
+    })
+    .catch(() => { repos.innerHTML = '<div class="status">Couldn\'t load repositories. See <a href="https://github.com/dhritiraj-08" target="_blank" rel="noopener">github.com/dhritiraj-08 ↗</a></div>'; });
+
+  document.getElementById('form').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    location.href = 'mailto:dhritirajlahkarwork@gmail.com?subject=' + encodeURIComponent('Portfolio message from ' + f.get('name')) +
+      '&body=' + encodeURIComponent(f.get('message') + '\n\n— ' + f.get('name') + ' (' + f.get('email') + ')');
+  });
+})();
+</script>
 </body>
 </html>
