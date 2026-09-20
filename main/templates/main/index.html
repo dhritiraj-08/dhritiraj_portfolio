@@ -9,6 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Sans:wght@400;500&family=Syne:wght@500;700;800&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  emailjs.init('-Shq1_OWMYMQ-v0TA');
+</script>
 <style>
 :root {
   --bg: #060608;
@@ -81,13 +85,10 @@ h2.big { font-weight: 700; font-size: clamp(32px, 5vw, 48px); line-height: 1.1; 
 #cube { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; z-index: 0; }
 .about .bio { position: relative; z-index: 1; padding: 40px; font-size: 15px; line-height: 1.75; color: var(--text); }
 .about .bio p + p { margin-top: 1.3em; }
-.about-r { position: relative; background: #1a1a0a; }
-.about-r img { display: block; width: 100%; height: 380px; object-fit: cover; object-position: center 20%; mix-blend-mode: luminosity; filter: grayscale(100%) contrast(1.2) brightness(0.6); border-left: 2px solid rgba(232,255,71,0.25); }
-.about-r::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(to right, rgba(6,6,8,0.85) 0%, rgba(6,6,8,0.3) 25%, transparent 50%); }
-.about-r::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(to bottom, rgba(6,6,8,0.5) 0%, transparent 25%), linear-gradient(to top, rgba(6,6,8,0.7) 0%, transparent 50%); }
-.about-r .tag { position: absolute; z-index: 2; left: 20px; bottom: 20px; font-family: var(--mono); }
-.about-r .tag b { display: block; font-weight: 400; font-size: 12px; letter-spacing: 0.1em; color: var(--text); }
-.about-r .tag span { display: block; margin-top: 2px; font-size: 10px; color: var(--muted); }
+.about-r { align-self: stretch; display: flex; align-items: center; justify-content: center; }
+.photo { position: relative; flex-shrink: 0; width: 260px; height: 260px; margin: auto; border-radius: 50%; overflow: hidden; background: transparent; border: 2px solid rgba(232,255,71,0.4); box-shadow: 0 0 0 6px rgba(232,255,71,0.06), 0 0 40px rgba(232,255,71,0.08); transition: border-color 300ms ease, box-shadow 300ms ease; }
+.photo:hover { border-color: #E8FF47; box-shadow: 0 0 0 8px rgba(232,255,71,0.08), 0 0 60px rgba(232,255,71,0.15); }
+.photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 15%; filter: none; mix-blend-mode: normal; }
 .about-end { margin-top: clamp(60px, 8vw, 110px); }
 
 /* SKILLS */
@@ -129,14 +130,15 @@ td { font-size: 15px; color: var(--text); padding-right: 12px; }
 #resume { border-top: 1px solid rgba(255,255,255,0.06); padding-bottom: clamp(60px, 8vw, 110px); }
 .rhead { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
 .rhead .sub { margin-top: 12px; font-size: 15px; color: var(--muted); }
-.rlinks { display: flex; align-items: baseline; gap: 28px; font-family: var(--mono); font-size: 13px; }
-.rlinks .dl { color: var(--accent); letter-spacing: 0; transition: letter-spacing 200ms ease; }
-.rlinks .dl:hover { letter-spacing: 0.06em; }
-.rlinks .vw { color: var(--muted); transition: color 150ms; }
-.rlinks .vw:hover { color: var(--text); }
-#resume .rcanvas { margin-top: 40px; }
-#resume canvas { display: block; width: 100%; height: auto; background: #ffffff; border: 1px solid rgba(232,255,71,0.2); cursor: pointer; }
-.doc-cap { margin-top: 10px; font-family: var(--mono); font-size: 10px; color: var(--muted); }
+#resume .rcanvas { margin-top: 40px; max-height: 70vh; overflow: hidden; cursor: pointer; }
+#resume canvas { display: block; width: 100%; height: auto; margin: 0 auto; background: #ffffff; border: 1px solid rgba(232,255,71,0.2); }
+.rbtns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+.rbtns button, .rbtns a { padding: 10px 24px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; cursor: pointer; transition: background 150ms, border-color 150ms; }
+.rbtns button { background: #E8FF47; color: #060608; border: none; }
+.rbtns button:hover { background: #F5FF6B; }
+.rbtns a { background: transparent; border: 1px solid rgba(232,255,71,0.3); color: #E8FF47; }
+.rbtns a:hover { border-color: #E8FF47; background: rgba(232,255,71,0.05); }
+.doc-cap { text-align: center; margin-top: 10px; font-family: var(--mono); font-size: 10px; color: var(--muted); }
 
 /* PROJECTS */
 #projects { position: relative; }
@@ -212,7 +214,6 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
   .vert { display: none; }
   .about { grid-template-columns: 1fr; }
   .about-r { order: -1; }
-  .about-r img { height: 280px; }
   .about .bio { padding: 32px 22px; }
     th { width: 34%; padding-right: 10px; }
   td { font-size: 14px; }
@@ -223,8 +224,7 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
   .row .tech { grid-column: 2; text-align: left; padding-top: 0; }
   .row .go { grid-column: 2; text-align: left; opacity: 1; padding-top: 0; }
       .rhead { flex-direction: column; align-items: flex-start; gap: 20px; }
-  .rlinks { flex-direction: column; align-items: flex-start; gap: 12px; }
-  .ghmore { flex-direction: column; align-items: flex-start; }
+    .ghmore { flex-direction: column; align-items: flex-start; }
   .ccols { display: block; }
   .cform { margin-top: 48px; }
   footer { flex-direction: column; }
@@ -272,8 +272,7 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
       </div>
     </div>
     <div class="about-r">
-      <img src="/static/img/profile.jpg" alt="Dhritiraj Lahakar" width="600" height="460" />
-      <div class="tag"><b>Dhritiraj Lahakar</b><span>Bengaluru · 2026</span></div>
+      <div class="photo"><img src="/static/img/profile.jpg" alt="Dhritiraj Lahakar" width="260" height="260" /></div>
     </div>
   </div>
   <div class="hair about-end"></div>
@@ -328,12 +327,12 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
     <!-- Place resume PDF at:
          C:\Dhritiraj Portfolio Website\staticfiles\resume.pdf
          and main\static\resume.pdf -->
-    <div class="rlinks">
-      <a class="dl" href="/static/resume.pdf" download>Download PDF ↓</a>
-      <a class="vw" href="/static/resume.pdf" target="_blank" rel="noopener">Open in new tab ↗</a>
-    </div>
   </div>
-  <div class="rcanvas"><canvas id="resume-canvas" aria-label="Résumé preview — click to open the PDF"></canvas></div>
+  <div class="rcanvas"><canvas id="resume-canvas" aria-label="Résumé preview"></canvas></div>
+  <div class="rbtns">
+    <button type="button" onclick="window.open('/static/resume.pdf', '_blank')">View full screen ↗</button>
+    <a href="/static/resume.pdf" download>Download PDF ↓</a>
+  </div>
   <div class="doc-cap">Last updated · Sep 2026</div>
 </section>
 
@@ -368,9 +367,9 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="1.5" width="11" height="21" rx="2.5"/><circle cx="12" cy="5" r="0.8"/><path d="M10.5 19.5h3"/></svg>
           <div class="t"><small>Phone</small><span>+91 6900921547</span></div><span class="arr">↗</span>
         </a>
-        <a class="card" href="https://linkedin.com/in/dhritiraj-lahakar" target="_blank" rel="noopener">
+        <a class="card" href="https://www.linkedin.com/in/dhritiraj-lahakar-31939528a/" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7.5 10.5v6M7.5 7.6v.1M11.5 16.5v-6M11.5 13c0-1.6 1.2-2.5 2.6-2.5s2.4.9 2.4 2.6v3.4"/></svg>
-          <div class="t"><small>LinkedIn</small><span>dhritiraj-lahakar</span></div><span class="arr">↗</span>
+          <div class="t"><small>LinkedIn</small><span>dhritiraj-lahakar-31939528a</span></div><span class="arr">↗</span>
         </a>
         <a class="card" href="https://github.com/dhritiraj-08" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M5.6 9.6 5 3.5l4.6 2.6M18.4 9.6 19 3.5l-4.6 2.6"/></svg>
@@ -738,17 +737,19 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
       const container = canvas.parentElement;
       const containerWidth = container.clientWidth;
       const viewport = page.getViewport({ scale: 1 });
-      const scale = containerWidth / viewport.width;
+      const maxHeight = window.innerHeight * 0.68;
+      const scaleByWidth = containerWidth / viewport.width;
+      const scaleByHeight = maxHeight / viewport.height;
+      const scale = Math.min(scaleByWidth, scaleByHeight);
       const dpr = Math.min(devicePixelRatio || 1, 2);
       const scaledViewport = page.getViewport({ scale: scale * dpr });
       if (resumeTask) resumeTask.cancel();
       canvas.width = scaledViewport.width;
       canvas.height = scaledViewport.height;
-      canvas.style.width = '100%';
+      canvas.style.width = (viewport.width * scale) + 'px';
       canvas.style.height = 'auto';
       resumeTask = page.render({ canvasContext: canvas.getContext('2d'), viewport: scaledViewport });
       await resumeTask.promise;
-      canvas.onclick = () => window.open('/static/resume.pdf', '_blank');
     } catch (e) {
       if (e && e.name === 'RenderingCancelledException') return;
       console.error('PDF render error:', e);
@@ -758,24 +759,54 @@ footer { margin-top: clamp(80px, 12vw, 160px); border-top: 1px solid var(--line)
   let resumeTimer = 0;
   addEventListener('resize', () => { clearTimeout(resumeTimer); resumeTimer = setTimeout(renderResume, 300); });
 
-  window.sendContactMessage = function sendContactMessage() {
+  window.sendContactMessage = async function sendContactMessage() {
     const name = document.getElementById('cf-name').value.trim();
     const email = document.getElementById('cf-email').value.trim();
     const message = document.getElementById('cf-message').value.trim();
 
     if (!name || !email || !message) {
-      alert('Please fill in all fields.');
+      showFormStatus('Please fill in all fields.', 'error');
       return;
     }
 
-    const subject = encodeURIComponent('Portfolio Contact from ' + name);
-    const body = encodeURIComponent(
-      'From: ' + name + '\nEmail: ' + email + '\n\n' + message
-    );
+    const btn = document.getElementById('cf-submit');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
 
-    window.location.href =
-      'mailto:dhritirajlahkarwork@gmail.com?subject=' + subject + '&body=' + body;
+    try {
+      await emailjs.send(
+        'service_l334x4u',
+        'template_54a96nh',
+        {
+          from_name: name,
+          from_email: email,
+          message: message,
+          to_email: 'dhritirajlahkarwork@gmail.com'
+        }
+      );
+      showFormStatus('Message sent! I will reply within 24 hours.', 'success');
+      document.getElementById('cf-name').value = '';
+      document.getElementById('cf-email').value = '';
+      document.getElementById('cf-message').value = '';
+    } catch (err) {
+      showFormStatus('Failed to send. Email me directly at dhritirajlahkarwork@gmail.com', 'error');
+    } finally {
+      btn.textContent = 'Send message';
+      btn.disabled = false;
+    }
   };
+
+  function showFormStatus(msg, type) {
+    let el = document.getElementById('form-status');
+    if (!el) {
+      el = document.createElement('p');
+      el.id = 'form-status';
+      el.style.cssText = 'margin-top:12px; font-family:DM Mono; font-size:12px; text-align:center;';
+      document.getElementById('cf-submit').after(el);
+    }
+    el.textContent = msg;
+    el.style.color = type === 'success' ? '#E8FF47' : '#ff6b6b';
+  }
 
 })();
 </script>
